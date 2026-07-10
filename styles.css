@@ -10,7 +10,7 @@
   --line-2: #dcdcde;
   --radius: 26px;
   --radius-sm: 16px;
-  --max: 1080px;
+  --max: 1200px;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
   --font: "Inter var", "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
 }
@@ -27,6 +27,39 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* ---------- Ambient background: fine grid + soft gradients ---------- */
+/* Layer 1 — faint horizontal + vertical lines, radially masked so they
+   stay whisper-light and never read as harsh contrast. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(15, 23, 42, 0.09) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.09) 1px, transparent 1px);
+  background-size: 46px 46px;
+  -webkit-mask-image: radial-gradient(125% 95% at 50% 0%, #000 0%, rgba(0,0,0,0.7) 50%, transparent 88%);
+  mask-image: radial-gradient(125% 95% at 50% 0%, #000 0%, rgba(0,0,0,0.7) 50%, transparent 88%);
+}
+
+/* Layer 2 — soft, transparent colour washes (blue / lavender / cyan)
+   that bleed together like the reference, no hard edges. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(48% 40% at 18% 8%,  rgba(99, 132, 255, 0.14), transparent 70%),
+    radial-gradient(46% 42% at 88% 12%, rgba(168, 128, 255, 0.13), transparent 72%),
+    radial-gradient(60% 50% at 50% 96%, rgba(120, 200, 255, 0.10), transparent 75%);
+  filter: blur(2px);
 }
 
 ::selection { background: var(--ink); color: #fff; }
@@ -101,9 +134,140 @@ a { color: inherit; text-decoration: none; }
 .hero {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 118px 26px 96px;
+  padding: 118px 26px 26px;
   text-align: center;
   position: relative;
+}
+.hero > *:not(.hero-fx):not(.speedway) { position: relative; z-index: 2; }
+
+/* ---------- Rotating 3D time / automation backdrop ---------- */
+.hero-fx {
+  position: absolute;
+  inset: -30px 0 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  perspective: 900px;          /* gives the tumble real depth */
+}
+.hero-fx .fx {
+  position: absolute;
+  color: var(--ink);
+  opacity: 0.16;
+  stroke-width: 1.5;
+  transform-style: preserve-3d;
+  will-change: transform;
+  animation: fx-tumble linear infinite, fx-float ease-in-out infinite alternate;
+}
+.hero-fx .fx path,
+.hero-fx .fx circle,
+.hero-fx .fx line,
+.hero-fx .fx polyline { vector-effect: non-scaling-stroke; }
+
+/* 3D tumble — rotates around X + Y so the glyphs turn like solid objects */
+@keyframes fx-tumble {
+  0%   { transform: rotateX(0deg)   rotateY(0deg)   rotateZ(0deg); }
+  100% { transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
+}
+@keyframes fx-float { to { translate: 0 -18px; } }
+
+/* each shape: own position, size, speed & spin axis — kept out of the text column */
+.fx-clock     { top: 12%;  left: 7%;   width: 74px;  height: 74px;  opacity: 0.18; animation-duration: 14s, 7s; }
+.fx-gear      { top: 56%;  left: 12%;  width: 58px;  height: 58px;  animation-duration: 11s, 9s;  animation-direction: reverse, alternate; }
+.fx-stopwatch { top: 16%;  right: 8%;  width: 66px;  height: 66px;  animation-duration: 13s, 8s;  animation-direction: reverse, alternate; }
+.fx-loop      { top: 62%;  right: 11%; width: 62px;  height: 62px;  animation-duration: 10s, 6.5s; }
+.fx-poly      { top: 36%;  left: 2%;   width: 88px;  height: 88px;  opacity: 0.12; animation-duration: 18s, 11s; }
+.fx-hourglass { top: 40%;  right: 2%;  width: 54px;  height: 54px;  animation-duration: 12s, 7.5s; animation-direction: reverse, alternate; }
+
+/* ---------- Ferrari-red car speedway ---------- */
+.speedway {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 8px;
+  width: 100vw;
+  height: 56px;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+}
+.car {
+  position: absolute;
+  bottom: 3px;
+  left: 0;
+  width: 132px;
+  height: 50px;
+  filter: drop-shadow(0 8px 10px rgba(200,30,0,0.22));
+  will-change: transform;
+  /* BEFORE the tools: life is slow — the car just crawls along */
+  animation: drive-slow 19s linear infinite;
+}
+@keyframes drive-slow {
+  0%   { transform: translateX(-16vw); }
+  100% { transform: translateX(116vw); }
+}
+.car .wheel { transform-box: fill-box; transform-origin: center; animation: wheel-spin 1.15s linear infinite; }
+@keyframes wheel-spin { to { transform: rotate(360deg); } }
+.car .trail { opacity: 0; }
+
+/* ---------- AFTER the tools: the JCB boost run ---------- */
+.speedway-boost { height: 92px; bottom: -4px; }
+.speedway-boost .car {
+  /* slow approach → stops at the JCB → smacked into hyperspeed */
+  animation: drive-boost 11s infinite;
+}
+@keyframes drive-boost {
+  0%   { transform: translateX(-16vw); animation-timing-function: linear; }
+  54%  { transform: translateX(16vw);  animation-timing-function: linear; }
+  62%  { transform: translateX(16.6vw); animation-timing-function: cubic-bezier(0.6, 0, 0.85, 0.25); }
+  100% { transform: translateX(120vw); }
+}
+.speedway-boost .car .wheel { animation-duration: 0.45s; }
+.speedway-boost .car .trail { animation: boost-trail 11s linear infinite; }
+@keyframes boost-trail {
+  0%, 62% { opacity: 0; }
+  68%     { opacity: 0.95; }
+  96%     { opacity: 0.85; }
+  100%    { opacity: 0; }
+}
+
+/* the JCB: parked mid-track, winds up and WHACKS the car forward */
+.jcb {
+  position: absolute;
+  bottom: 4px;
+  left: calc(16vw - 122px);
+  width: 140px;
+  height: 70px;
+}
+.jcb-arm {
+  transform-box: view-box;
+  transform-origin: 76px 32px;
+  animation: jcb-whack 11s var(--ease) infinite;
+}
+@keyframes jcb-whack {
+  0%, 49%   { transform: rotate(0deg); }
+  56%       { transform: rotate(-26deg); }  /* wind up */
+  61%       { transform: rotate(16deg); }   /* smack! */
+  67%, 100% { transform: rotate(0deg); }
+}
+
+/* impact starburst at the moment of contact */
+.impact {
+  position: absolute;
+  bottom: 34px;
+  left: calc(16vw + 4px);
+  width: 36px;
+  height: 36px;
+  color: #f59e0b;
+  opacity: 0;
+  animation: impact-flash 11s linear infinite;
+}
+@keyframes impact-flash {
+  0%, 59% { opacity: 0; transform: scale(0.4); }
+  62%     { opacity: 1; transform: scale(1.15); }
+  67%     { opacity: 0; transform: scale(1.5); }
+  100%    { opacity: 0; }
 }
 
 .eyebrow {
@@ -146,13 +310,150 @@ a { color: inherit; text-decoration: none; }
 .js .hero h1 .line:nth-child(2) span { animation-delay: 0.21s; }
 @keyframes rise { to { transform: translateY(0); } }
 
+/* gradient keyword in the headline */
+.grad-word {
+  font-style: normal;
+  background: linear-gradient(100deg, #6366f1 0%, #a855f7 34%, #ec4899 62%, #f97316 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
 .hero-sub {
-  margin: 30px auto 0;
-  max-width: 460px;
+  margin: 34px auto 0;
+  max-width: 560px;
   font-size: clamp(16px, 2vw, 19px);
   line-height: 1.5;
   color: var(--muted);
   font-weight: 400;
+}
+
+/* staggered story reveal */
+.js .hero-sub > * { opacity: 0; transform: translateY(14px); animation: story-in 0.8s var(--ease) forwards; }
+.js .hero-sub > *:nth-child(1) { animation-delay: 0.45s; }
+.js .hero-sub > *:nth-child(2) { animation-delay: 0.62s; }
+.js .hero-sub > *:nth-child(3) { animation-delay: 0.82s; }
+.js .hero-sub > *:nth-child(4) { animation-delay: 1.0s; }
+@keyframes story-in { to { opacity: 1; transform: translateY(0); } }
+
+.story-open {
+  font-size: 13px;
+  font-weight: 560;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* escalation: cards → rewards → chaos, each louder than the last */
+.hero-sub-accent {
+  margin-top: 14px;
+  font-size: clamp(19px, 2.6vw, 25px);
+  letter-spacing: -0.025em;
+  line-height: 1.35;
+}
+.esc-1 { font-weight: 480; color: var(--muted); }
+.esc-2 { font-weight: 600; color: var(--ink-2); }
+.esc-3 {
+  font-weight: 720;
+  background: linear-gradient(95deg, var(--ink) 20%, #dc2626 75%, #f97316 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.story-intro { margin-top: 16px; }
+
+/* built-to inline pills — one line, one colour, centered on the page */
+.hero-built {
+  margin: 26px 0 0 calc(50% - 50vw);
+  width: 100vw;
+  padding: 0 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 44px;
+  flex-wrap: nowrap;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: clamp(18px, 2.2vw, 23px);
+  font-weight: 660;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+  white-space: nowrap;
+  transition: transform 0.3s var(--ease);
+}
+.pill:hover { transform: translateY(-2px); }
+.pill-chk {
+  flex: 0 0 auto;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: var(--ink);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+.pill-chk svg { width: 22px; height: 22px; overflow: visible; }
+
+/* --- badge vignettes: each one acts out its promise --- */
+
+/* 1 · chaos → order: tangle dissolves into clean rows, then relapses */
+.vz-scramble { animation: vz-tangle 3.6s var(--ease) infinite; }
+.vz-order    { animation: vz-settle 3.6s var(--ease) infinite; }
+@keyframes vz-tangle {
+  0%, 38%  { opacity: 1; }
+  52%, 86% { opacity: 0; }
+  100%     { opacity: 1; }
+}
+@keyframes vz-settle {
+  0%, 38%  { opacity: 0; }
+  52%, 86% { opacity: 1; }
+  100%     { opacity: 0; }
+}
+
+/* 2 · time: hands sweep the dial */
+.vz-min, .vz-hour { transform-box: view-box; transform-origin: 12px 12px; }
+.vz-min  { animation: vz-sweep 3s linear infinite; }
+.vz-hour { animation: vz-sweep 36s linear infinite; }
+@keyframes vz-sweep { to { transform: rotate(360deg); } }
+
+/* 3 · reward: the line keeps drawing itself up, star pops at the peak */
+.vz-rise {
+  stroke-dasharray: 100;
+  animation: vz-draw 2.8s var(--ease) infinite;
+}
+@keyframes vz-draw {
+  0%        { stroke-dashoffset: 100; }
+  45%, 82%  { stroke-dashoffset: 0; }
+  100%      { stroke-dashoffset: -100; }
+}
+.vz-star {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: vz-pop 2.8s var(--ease) infinite;
+}
+@keyframes vz-pop {
+  0%, 38%   { transform: scale(0); opacity: 0; }
+  50%       { transform: scale(1.25); opacity: 1; }
+  58%, 82%  { transform: scale(1); opacity: 1; }
+  95%, 100% { transform: scale(0); opacity: 0; }
+}
+
+@media (max-width: 720px) {
+  .hero-built { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vz-scramble { opacity: 0; }
+  .vz-order { opacity: 1; }
+  .vz-rise { stroke-dasharray: none; }
+  .vz-star { transform: scale(1); opacity: 1; }
 }
 
 .hero-cta {
@@ -188,7 +489,7 @@ a { color: inherit; text-decoration: none; }
 .btn-ghost:hover { color: var(--ink); }
 
 .scroll-cue {
-  margin-top: 74px;
+  margin-top: 30px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -295,17 +596,26 @@ a { color: inherit; text-decoration: none; }
   transform: translateY(-5px);
 }
 
-/* app-tile icon */
+/* app-tile icon — each app's authentic gradient "brand-mark" header */
 .tile {
   width: 54px; height: 54px;
   border-radius: var(--radius-sm);
-  background: var(--tile);
+  background: var(--grad, var(--tile));
   display: flex; align-items: center; justify-content: center;
-  color: var(--tile-ink);
-  transition: background 0.4s var(--ease), color 0.4s var(--ease), transform 0.4s var(--ease);
+  color: #fff;
+  box-shadow:
+    0 8px 18px var(--glow, rgba(0,0,0,0.14)),
+    inset 0 1px 0 rgba(255,255,255,0.45);
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), filter 0.4s var(--ease);
 }
-.tile svg { width: 26px; height: 26px; display: block; }
-.card:hover .tile { background: var(--ink); color: #fff; transform: scale(1.04); }
+.tile svg { width: 27px; height: 27px; display: block; }
+.card:hover .tile {
+  transform: translateY(-2px) scale(1.05);
+  filter: brightness(1.06) saturate(1.05);
+  box-shadow:
+    0 12px 26px var(--glow, rgba(0,0,0,0.2)),
+    inset 0 1px 0 rgba(255,255,255,0.55);
+}
 
 .card h3 {
   margin-top: 22px;
@@ -319,6 +629,64 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.52;
   color: var(--muted);
 }
+
+/* --- tile vignettes: each icon acts out its app on hover --- */
+
+/* 01 Ledger: entry rows write themselves in sequence */
+.an-row { stroke-dasharray: 100; }
+.card:hover .an-row { animation: an-write 0.5s var(--ease) both; }
+.card:hover .an-d2 { animation-delay: 0.14s; }
+.card:hover .an-d3 { animation-delay: 0.28s; }
+@keyframes an-write { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+
+/* 02 Card Vault: stripe slides on, signature stamps in */
+.an-stripe, .an-sig { transform-box: fill-box; transform-origin: left center; }
+.card:hover .an-stripe { animation: an-grow 0.5s var(--ease) both; }
+.card:hover .an-sig { animation: an-grow 0.45s 0.22s var(--ease) both; }
+@keyframes an-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* 03 Gift Card Vault: keyhole turns like a dial being locked */
+.an-dial { transform-box: view-box; transform-origin: 12px 10.6px; }
+.card:hover .an-dial { animation: an-turn 0.85s var(--ease) both; }
+@keyframes an-turn { 60% { transform: rotate(200deg); } 100% { transform: rotate(180deg); } }
+
+/* 04 Gift Card Loader: ribbon bow gives a happy wiggle */
+.an-bow { transform-box: view-box; transform-origin: 12px 5.5px; }
+.card:hover .an-bow { animation: an-wiggle 0.7s var(--ease); }
+@keyframes an-wiggle { 25% { transform: rotate(-13deg); } 60% { transform: rotate(9deg); } 100% { transform: rotate(0); } }
+
+/* 05 Amex Shopwise: the gift box does an excited bounce */
+.an-box { transform-box: view-box; transform-origin: 12px 19.5px; }
+.card:hover .an-box { animation: an-bounce 0.7s var(--ease); }
+@keyframes an-bounce {
+  30% { transform: translateY(-2.6px) scaleY(1.06); }
+  55% { transform: translateY(0) scaleY(0.94); }
+  75% { transform: translateY(-1px) scaleY(1.02); }
+  100% { transform: none; }
+}
+
+/* 06 RuPay Redeem: the check redraws — redeemed! */
+.an-check { stroke-dasharray: 100; }
+.card:hover .an-check { animation: an-write 0.55s 0.08s var(--ease) both; }
+
+/* 07 Quick Mailer: envelope lifts off, flap seals shut */
+.an-send { transform-box: view-box; transform-origin: 12px 12px; }
+.card:hover .an-send { animation: an-fly 0.8s var(--ease); }
+@keyframes an-fly {
+  30% { transform: translate(1.6px, -1.6px) rotate(-7deg); }
+  60% { transform: translate(-0.5px, 0.4px) rotate(2deg); }
+  100% { transform: none; }
+}
+.an-flap { stroke-dasharray: 100; }
+.card:hover .an-flap { animation: an-write 0.5s 0.1s var(--ease) both; }
+
+/* 08 Focus Sprint: press the crown, needle sweeps a lap */
+.an-needle { transform-box: view-box; transform-origin: 12px 13.5px; }
+.card:hover .an-needle { animation: an-sweep-once 0.9s 0.12s var(--ease) both; }
+@keyframes an-sweep-once { to { transform: rotate(360deg); } }
+.an-btn { transform-box: view-box; transform-origin: 12px 3px; }
+.card:hover .an-btn { animation: an-press 0.4s var(--ease); }
+@keyframes an-press { 30% { transform: translateY(1.4px); } 100% { transform: none; } }
 
 .card .idx {
   position: absolute;
