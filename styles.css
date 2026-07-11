@@ -89,7 +89,7 @@ a { color: inherit; text-decoration: none; }
 .nav-inner {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 12px 26px;
+  padding: 10px 26px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -205,7 +205,7 @@ a { color: inherit; text-decoration: none; }
 .hero {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 48px 26px 26px;
+  padding: 34px 26px 20px;
   text-align: center;
   position: relative;
 }
@@ -249,124 +249,150 @@ a { color: inherit; text-decoration: none; }
 .fx-poly      { top: 36%;  left: 2%;   width: 88px;  height: 88px;  opacity: 0.12; animation-duration: 18s, 11s; }
 .fx-hourglass { top: 40%;  right: 2%;  width: 54px;  height: 54px;  animation-duration: 12s, 7.5s; animation-direction: reverse, alternate; }
 
-/* ---------- Popeye's slow stroll ---------- */
-.speedway {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 8px;
-  width: 100vw;
-  height: 104px;
-  z-index: 1;
-  pointer-events: none;
+/* ---------- Footer acceleration line ----------
+   Story: a clock walks the track by hand at a 0.5× crawl (red). At the
+   1K-cards checkpoint it steps up to 1.0× (amber); at the Tools gear it
+   rockets to 3.4× (green) and is gone. Told in the page's own thin,
+   abstract line-art — no cartoon.
+
+   Timing budget (11s loop): the crawl gets most of the clock, the sprint
+   almost none — so the eye reads distance ÷ speed as real acceleration.
+     0%→53%  : 0.5×  crawl   (0% → 16%, the long walk)
+     53%→80% : 1.8×  faster  (16% → 53%)
+     80%→100%: 3.4×  sprint  (53% → 104%, gone) */
+.boostline {
+  --boost-red:   #ef4444;
+  --boost-amber: #f59e0b;
+  --boost-green: #0ea371;
+  position: relative;
+  max-width: var(--max);
+  margin: 0 auto;
+  text-align: center;
+}
+.boost-track {
+  position: relative;
+  height: 60px;
+  /* the baseline the traveller rides on */
+  background: linear-gradient(90deg, transparent, var(--line-2) 14%, var(--line-2) 86%, transparent) center / 100% 1.5px no-repeat;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
-.walker {
+/* steady pace ticks on the approach — a calm, even rhythm that fades
+   out as it nears the first checkpoint */
+.boost-track .pace {
   position: absolute;
-  bottom: 2px;
-  left: 0;
-  width: 140px;
-  height: 140px;
-  filter: drop-shadow(0 8px 10px rgba(15, 35, 20, 0.2));
-  will-change: transform;
-  /* BEFORE the tools: no spinach, no hurry */
-  animation: stroll 26s linear infinite;
+  left: 0; top: 50%;
+  width: 16%; height: 12px;
+  transform: translateY(-50%);
+  background: repeating-linear-gradient(90deg, var(--line-2) 0 1.5px, transparent 1.5px 30px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 20%, transparent);
+  opacity: 0.9;
 }
-@keyframes stroll {
-  0%   { transform: translateX(-14vw); }
-  100% { transform: translateX(114vw); }
+/* ── the two card checkpoints ──
+   node-a (16%) and node-b (53%). Each sits dim on the line and flares in
+   its stage colour the instant the clock touches it. */
+.boost-track .node {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--line-2);
+  line-height: 0;
 }
-/* walk cycle: limbs swing, head bobs, pipe puffs drift away */
-.walker .arm, .walker .leg { transform-box: fill-box; transform-origin: 50% 4%; animation: limb-swing 0.9s ease-in-out infinite; }
-.walker .arm-b, .walker .leg-f { animation-delay: -0.45s; }
-@keyframes limb-swing {
-  0%, 100% { transform: rotate(13deg); }
-  50%      { transform: rotate(-13deg); }
+.boost-track .node svg { display: block; width: 38px; height: 38px; }
+.boost-track .node-a { left: 16%; animation: node-a-lit 11s infinite; }
+.boost-track .node-b { left: 53%; animation: node-b-lit 11s infinite; }
+@keyframes node-a-lit {              /* lights amber when touched, then holds lit until the clock exits */
+  0%, 51%   { color: var(--line-2); filter: none; }
+  53%       { color: var(--boost-amber); filter: drop-shadow(0 0 8px rgba(245, 158, 11, 0.65)); }
+  100%      { color: var(--boost-amber); filter: drop-shadow(0 0 4px rgba(245, 158, 11, 0.35)); }
 }
-.walker .head { transform-box: fill-box; transform-origin: 50% 88%; animation: head-bob 0.9s ease-in-out infinite; }
-@keyframes head-bob {
-  0%, 100% { transform: rotate(1.4deg); }
-  50%      { transform: rotate(-1.4deg); }
+@keyframes node-b-lit {             /* flares green as the 1.8× → 3.4× sprint fires */
+  0%, 78%   { color: var(--line-2); filter: none; }
+  80%       { color: var(--boost-green); filter: drop-shadow(0 0 8px rgba(14, 163, 113, 0.65)); }
+  100%      { color: var(--boost-green); filter: drop-shadow(0 0 4px rgba(14, 163, 113, 0.35)); }
 }
-.walker .puff { transform-box: fill-box; animation: pipe-puff 1.6s ease-out infinite; }
-.walker .puff-2 { animation-delay: -0.8s; }
-@keyframes pipe-puff {
-  0%   { transform: translate(0, 0); opacity: 0.75; }
-  100% { transform: translate(5px, -8px); opacity: 0; }
+/* the traveller: an analog clock with a stretching speed-tail (::before) */
+.boost-track .comet {
+  position: absolute;
+  top: 50%; left: 0;
+  transform: translateY(-50%);
+  width: 40px; height: 40px;
+  color: var(--boost-red);        /* red crawl → amber → green sprint */
+  will-change: left;
+  filter: drop-shadow(0 0 5px currentColor);
+  animation: comet-travel 11s infinite, comet-color 11s infinite;
 }
-.walker .trail { opacity: 0; }
+.boost-track .comet svg { display: block; width: 40px; height: 40px; }
+@keyframes comet-travel {
+  0%   { left: -4%; animation-timing-function: linear; }          /* 0.5× crawl by hand */
+  53%  { left: 16%; animation-timing-function: linear; }          /* touch card 1 → 1.8× */
+  80%  { left: 53%; animation-timing-function: cubic-bezier(0.5, 0, 0.75, 0.25); } /* touch card 2 → 3.4× */
+  100% { left: 104%; }                                            /* gone */
+}
+@keyframes comet-color {
+  0%,   52.9% { color: var(--boost-red); }     /* stage 1 — 0.5× */
+  53%,  79.9% { color: var(--boost-amber); }   /* stage 2 — 1.8× */
+  80%,  100%  { color: var(--boost-green); }   /* stage 3 — 3.4× */
+}
+/* the hands step up a gear at each checkpoint — 1 turn in the long crawl,
+   2 in the middle, 3 in the blur-fast sprint: the same distance-÷-speed
+   read, told on the dial. */
+.boost-track .comet .ch-h,
+.boost-track .comet .ch-m {
+  transform-box: view-box;
+  transform-origin: 12px 12px;
+}
+.boost-track .comet .ch-m { animation: hand-accel 11s linear infinite; }
+.boost-track .comet .ch-h { animation: hand-accel-slow 11s linear infinite; }
+@keyframes hand-accel {
+  0%   { transform: rotate(0deg); }
+  53%  { transform: rotate(360deg); }    /* 0.5× — one slow sweep */
+  80%  { transform: rotate(1080deg); }   /* 1.8× — much more ground */
+  100% { transform: rotate(2160deg); }   /* 3.4× — spun into a blur */
+}
+@keyframes hand-accel-slow {
+  0%   { transform: rotate(0deg); }
+  53%  { transform: rotate(60deg); }
+  80%  { transform: rotate(230deg); }
+  100% { transform: rotate(560deg); }
+}
+.boost-track .comet::before {
+  content: "";
+  position: absolute;
+  right: 100%; top: 50%;
+  height: 2px;
+  margin-right: -3px;
+  transform: translateY(-50%);
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, currentColor);
+  animation: comet-tail 11s infinite;
+}
+@keyframes comet-tail {
+  0%,  52%  { width: 8px;   opacity: 0.4; }   /* stub during the 0.5× crawl */
+  53%, 78%  { width: 26px;  opacity: 0.7; }   /* a little longer at 1.8× */
+  91%       { width: 120px; opacity: 0.95; }  /* streaked out in the 3.4× sprint */
+  100%      { width: 40px;  opacity: 0; }
+}
+.boost-caption {
+  margin-top: 8px;
+  font-size: clamp(19px, 2.6vw, 25px);
+  letter-spacing: -0.025em;
+  line-height: 1.35;
+  color: var(--muted);
+}
+.boost-caption .grad-word { font-weight: 600; }
 @media (prefers-reduced-motion: reduce) {
-  .walker .arm, .walker .leg, .walker .head, .walker .puff { animation: none; }
-}
-
-/* ---------- AFTER the tools: the spinach boost run ---------- */
-.speedway-boost { height: 150px; bottom: -4px; }
-.speedway-boost .walker {
-  /* slow walk → stop at the spinach → one gulp → ROCKETS off */
-  animation: walk-boost 12s infinite;
-}
-@keyframes walk-boost {
-  0%   { transform: translateX(-14vw); animation-timing-function: linear; }
-  46%  { transform: translateX(15vw);  animation-timing-function: linear; }
-  60%  { transform: translateX(15vw);  animation-timing-function: cubic-bezier(0.6, 0, 0.85, 0.25); }
-  100% { transform: translateX(125vw); }
-}
-.speedway-boost .walker .arm,
-.speedway-boost .walker .leg { animation-duration: 0.38s; }
-.speedway-boost .walker .trail { animation: boost-trail 12s linear infinite; }
-@keyframes boost-trail {
-  0%, 60% { opacity: 0; }
-  66%     { opacity: 0.95; }
-  96%     { opacity: 0.85; }
-  100%    { opacity: 0; }
-}
-/* the biceps balloon the moment the spinach lands */
-.speedway-boost .walker .forearm {
-  transform-box: fill-box;
-  transform-origin: 50% 60%;
-  animation: spinach-flex 12s var(--ease) infinite;
-}
-@keyframes spinach-flex {
-  0%, 56%   { transform: scale(1); }
-  62%       { transform: scale(1.55); }
-  68%       { transform: scale(1.3); }
-  78%, 100% { transform: scale(1); }
-}
-
-/* the spinach can: hidden in his pocket, whipped out, chugged overhead */
-.speedway-boost .walker .can {
-  transform-box: fill-box;
-  transform-origin: 50% 0%;   /* pivot at the can's opening */
-  opacity: 0;
-  animation: can-swig 12s var(--ease) infinite;
-}
-@keyframes can-swig {
-  0%, 44%   { opacity: 0; transform: translate(0, 0) rotate(0deg); }
-  46%       { opacity: 1; transform: translate(4px, -12px) rotate(-12deg); }  /* whipped out of the pocket */
-  50%       { opacity: 1; transform: translate(20px, -10px) rotate(0deg); }   /* raised in front of his face */
-  53%       { opacity: 1; transform: translate(20px, -8px) rotate(140deg); }  /* tipped overhead: down the hatch! */
-  57%       { opacity: 1; transform: translate(20px, -8px) rotate(152deg); }
-  59%, 100% { opacity: 0; transform: translate(20px, -8px) rotate(152deg) scale(0.5); }
-}
-
-/* green power burst at the moment of the gulp */
-.burst {
-  position: absolute;
-  bottom: 62px;
-  left: calc(15vw + 34px);
-  width: 36px;
-  height: 36px;
-  color: #22c55e;
-  opacity: 0;
-  animation: burst-flash 12s linear infinite;
-}
-@keyframes burst-flash {
-  0%, 52% { opacity: 0; transform: scale(0.4); }
-  56%     { opacity: 1; transform: scale(1.15); }
-  62%     { opacity: 0; transform: scale(1.6); }
-  100%    { opacity: 0; }
+  .boost-track .comet,
+  .boost-track .comet::before,
+  .boost-track .comet .ch-h,
+  .boost-track .comet .ch-m,
+  .boost-track .node-a,
+  .boost-track .node-b { animation: none; }
+  .boost-track .comet { left: 104%; color: var(--boost-green); }
+  .boost-track .node-a { color: var(--boost-amber); }
+  .boost-track .node-b { color: var(--boost-green); }
 }
 
 .eyebrow {
@@ -661,9 +687,9 @@ a { color: inherit; text-decoration: none; }
 .section {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 40px 26px 40px;
+  padding: 28px 26px 28px;
 }
-.section-head { text-align: center; margin-bottom: 34px; }
+.section-head { text-align: center; margin-bottom: 26px; }
 .section-head h2 {
   font-size: clamp(26px, 3.6vw, 40px);
   font-weight: 660;
@@ -679,7 +705,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* ---------- Tools grid ---------- */
-.tools { position: relative; padding-bottom: 44px; }
+.tools { position: relative; padding-bottom: 30px; }
 
 .flow-line {
   position: absolute;
@@ -718,8 +744,8 @@ a { color: inherit; text-decoration: none; }
   background: var(--bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 28px 26px 30px;
-  min-height: 182px;
+  padding: 22px 24px 24px;
+  min-height: 168px;
   overflow: hidden;
   cursor: default;
   transition:
@@ -843,7 +869,7 @@ a { color: inherit; text-decoration: none; }
 .card:hover .idx { color: var(--muted); }
 
 /* ---------- License / pricing ---------- */
-.license { padding-top: 40px; padding-bottom: 8px; }
+.license { padding-top: 28px; padding-bottom: 8px; }
 
 .license-grid {
   display: grid;
@@ -859,7 +885,7 @@ a { color: inherit; text-decoration: none; }
   background: var(--bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 30px 30px 34px;
+  padding: 24px 28px 26px;
   overflow: hidden;
   transition: transform 0.5s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
@@ -947,7 +973,7 @@ a { color: inherit; text-decoration: none; }
 /* merged into the page — no solid panel, the main gradient grid shows through */
 .ecosystem {
   background: transparent;
-  padding: 44px 26px 40px;
+  padding: 30px 26px 28px;
   text-align: center;
   overflow: hidden;
 }
@@ -997,8 +1023,8 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- Social / Connect ---------- */
 /* Connect page hero is short — pull it up so "Say hello" starts near the top */
-.page-connect .hero { padding-top: 66px; padding-bottom: 8px; }
-.social { padding: 20px 26px 90px; max-width: 760px; margin: 0 auto; }
+.page-connect .hero { padding-top: 18px; padding-bottom: 8px; }
+.social { padding: 14px 26px 20px; max-width: 760px; margin: 0 auto; }
 .social-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1010,8 +1036,8 @@ a { color: inherit; text-decoration: none; }
   background: var(--bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 40px 34px 36px;
-  min-height: 230px;
+  padding: 30px 30px 28px;
+  min-height: 208px;
   overflow: hidden;
   transition: transform 0.45s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
@@ -1023,11 +1049,11 @@ a { color: inherit; text-decoration: none; }
 .social-card .tile { width: 58px; height: 58px; border-radius: 18px; }
 .social-card .tile svg { width: 30px; height: 30px; }
 .social-card:hover .tile { background: var(--ink); color: #fff; }
-.social-card h3 { margin-top: 24px; font-size: 22px; font-weight: 640; letter-spacing: -0.02em; }
+.social-card h3 { margin-top: 18px; font-size: 22px; font-weight: 640; letter-spacing: -0.02em; }
 /* keep the copy clear of the bottom-right arrow so nothing overlaps */
 .social-card p { margin-top: 7px; font-size: 15px; color: var(--muted); padding-right: 58px; }
 .social-card .arw-c {
-  position: absolute; right: 34px; bottom: 34px;
+  position: absolute; right: 30px; bottom: 28px;
   width: 40px; height: 40px; border-radius: 50%;
   border: 1px solid var(--line-2);
   display: flex; align-items: center; justify-content: center;
@@ -1038,26 +1064,11 @@ a { color: inherit; text-decoration: none; }
 .social-card .arw-c svg { width: 17px; height: 17px; }
 
 /* ---------- Footer ---------- */
-/* just the Popeye feed — no brand / tagline / links */
 .footer {
-  position: relative;              /* anchors the Popeye feed at the base */
-  padding: 0 26px 150px;           /* the runway height for Popeye's run */
+  position: relative;
+  padding: 16px 26px 30px;
   overflow: hidden;
 }
-.footer .speedway-boost { bottom: 0; }
-.footer-inner {
-  max-width: var(--max);
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-.footer .brand { color: var(--ink); }
-.footer-tag { font-size: 13.5px; color: var(--muted); }
-.footer-links { display: flex; gap: 24px; font-size: 13.5px; color: var(--muted); }
-.footer-links a:hover { color: var(--ink); }
 
 /* ---------- Reveal utility ---------- */
 .reveal { transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
@@ -1074,14 +1085,13 @@ a { color: inherit; text-decoration: none; }
 }
 @media (max-width: 480px) {
   .grid, .social-grid { grid-template-columns: 1fr; }
-  .hero { padding: 84px 22px 70px; }
-  .nav-inner { padding: 11px 18px; }
+  .hero { padding: 56px 22px 46px; }
+  .nav-inner { padding: 9px 18px; }
   .nav-links { gap: 18px; }
   .brand { gap: 10px; }
   .brand-mark .ico { width: 40px; height: 40px; }
   .brand-word { font-size: 18px; }
   .brand-tag { display: none; }
-  .footer-inner { flex-direction: column; text-align: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
