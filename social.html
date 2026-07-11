@@ -3,14 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YourCardJourney — Let's connect.</title>
+  <title>YourCardJourney Store</title>
   <meta name="description" content="Join the YourCardJourney community." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://rsms.me/" />
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   <link rel="stylesheet" href="styles.css" />
   <script>document.documentElement.classList.add('js');</script>
 </head>
-<body>
+<body class="page-connect">
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
       <g id="i-logo" fill="none" stroke="currentColor" stroke-width="1.6">
@@ -26,10 +27,29 @@
 
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="index.html" class="brand"><svg><use href="#i-logo"/></svg> YourCardJourney</a>
+      <a href="index.html" class="brand" aria-label="YourCardJourney — go to home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg class="ico ico-mark" viewBox="0 0 48 48">
+            <!-- solid ink tile — same language as the page's feature glyphs -->
+            <rect x="1" y="1" width="46" height="46" rx="13" fill="var(--ink)"/>
+            <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <!-- the card -->
+              <rect x="9" y="20" width="22" height="15" rx="3.2"/>
+              <path d="M9 25.5h22"/>
+              <!-- the journey: one clean line rising up out of the card -->
+              <path class="mk-rise" d="M15 31.5L36 12" pathLength="100"/>
+              <path d="M36 12L29.5 12M36 12L36 18.5"/>
+            </g>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-word">YourCard<em>Journey</em></span>
+          <span class="brand-tag">One place · Every card tool</span>
+        </span>
+      </a>
       <div class="nav-links">
-        <a href="index.html">Tools</a>
-        <a href="social.html" class="active">Social</a>
+        <a href="index.html#license">Get License</a>
+        <a href="social.html" class="active">Connect</a>
       </div>
     </div>
   </nav>
@@ -45,21 +65,98 @@
 
     <section class="social">
       <div class="social-grid">
-        <a class="social-card reveal" href="https://chat.whatsapp.com/" target="_blank" rel="noopener">
-          <div class="tile"><svg><use href="#i-whatsapp"/></svg></div>
-          <h3>WhatsApp</h3>
-          <p>Join the community.</p>
-          <span class="arw-c"><svg><use href="#i-arrow"/></svg></span>
+        <a class="social-card reveal" href="https://whatsapp.com/channel/0029Vb6gU8QIt5rqf5Yxao0n" target="_blank" rel="noopener" style="--grad:linear-gradient(140deg,#25d366 0%,#12b455 100%);--glow:rgba(37,211,102,.4)">
+          <div class="tile"><svg viewBox="0 0 24 24"><use href="#i-whatsapp"/></svg></div>
+          <h3>WhatsApp Channel</h3>
+          <p>Follow the channel for every update.</p>
+          <span class="arw-c"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
         </a>
-        <a class="social-card reveal" href="https://x.com/YourCardJourney" target="_blank" rel="noopener">
-          <div class="tile"><svg><use href="#i-x"/></svg></div>
+        <a class="social-card reveal" href="https://x.com/YourCardJourney" target="_blank" rel="noopener" style="--grad:linear-gradient(140deg,#2a2a2e 0%,#0a0a0b 100%);--glow:rgba(10,10,11,.32)">
+          <div class="tile"><svg viewBox="0 0 24 24"><use href="#i-x"/></svg></div>
           <h3>X</h3>
           <p>@YourCardJourney</p>
-          <span class="arw-c"><svg><use href="#i-arrow"/></svg></span>
+          <span class="arw-c"><svg viewBox="0 0 24 24"><use href="#i-arrow"/></svg></span>
         </a>
       </div>
     </section>
   </main>
+
+  <footer class="footer">
+    <!-- Popeye feed — the spinach boost run closes out the page -->
+    <div class="speedway speedway-boost" aria-hidden="true">
+      <svg class="burst" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+        <path d="M20 4v7M20 29v7M4 20h7M29 20h7M9 9l5 5M26 26l5 5M31 9l-5 5M14 26l-5 5"/>
+      </svg>
+      <div class="walker">
+        <svg viewBox="0 -44 140 140" width="140" height="140">
+          <!-- speed trail (only during the spinach dash) -->
+          <g class="trail" stroke="#22c55e" stroke-linecap="round">
+            <line x1="1" y1="40" x2="17" y2="40" stroke-width="2.4"/>
+            <line x1="3" y1="56" x2="21" y2="56" stroke-width="2"/>
+            <line x1="2" y1="72" x2="16" y2="72" stroke-width="1.8"/>
+          </g>
+          <!-- back arm -->
+          <g class="arm arm-b">
+            <path d="M33 39 L26 48" stroke="#14181d" stroke-width="6.5" stroke-linecap="round"/>
+            <g class="forearm">
+              <path d="M26 48 C22 53 21 58 24 62" fill="none" stroke="#f4c49b" stroke-width="8.5" stroke-linecap="round"/>
+              <circle cx="24.5" cy="63" r="4" fill="#f4c49b"/>
+            </g>
+          </g>
+          <!-- legs -->
+          <g class="leg leg-b">
+            <path d="M37 60 C35 68 34 74 33 82" fill="none" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+            <ellipse cx="34" cy="87.5" rx="7.5" ry="4" fill="#5b3a1e"/>
+          </g>
+          <g class="leg leg-f">
+            <path d="M41 60 C43 68 44 74 45 82" fill="none" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+            <ellipse cx="46" cy="87.5" rx="7.5" ry="4" fill="#7c4a21"/>
+          </g>
+          <!-- torso: sailor shirt, red collar, blue trousers -->
+          <path d="M28 62 C26 46 30 35 39 34 C48 35 52 46 50 62 z" fill="#14181d"/>
+          <path d="M33 38 h12" stroke="#e11d48" stroke-width="3" stroke-linecap="round"/>
+          <rect x="27" y="57" width="24" height="7" rx="2" fill="#2563eb"/>
+          <!-- BIG spinach can, stashed in the trouser pocket until the big moment -->
+          <g transform="translate(33,62)">
+            <g class="can">
+              <rect x="-15" y="-42" width="30" height="42" rx="4" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+              <rect x="-15" y="-33" width="30" height="21" fill="#16a34a"/>
+              <text x="0" y="-24.5" text-anchor="middle" font-size="6.4" font-weight="800" fill="#fff" font-family="Inter, Arial, sans-serif" letter-spacing=".3">SPINACH</text>
+              <path d="M-7 -18.5 q7 -6 14 0 q-7 6.2 -14 0z" fill="#a7f3d0"/>
+              <ellipse cx="0" cy="-42" rx="13.8" ry="4" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1"/>
+              <ellipse cx="0" cy="-42" rx="9" ry="2.5" fill="#d1d5db"/>
+            </g>
+          </g>
+          <!-- front arm: the mighty forearm -->
+          <g class="arm arm-f">
+            <path d="M45 39 L53 47" stroke="#14181d" stroke-width="6.5" stroke-linecap="round"/>
+            <g class="forearm">
+              <path d="M53 47 C58 51 60 56 58 61" fill="none" stroke="#f4c49b" stroke-width="9.5" stroke-linecap="round"/>
+              <circle cx="57.5" cy="62" r="4.2" fill="#f4c49b"/>
+              <path d="M55.5 51.5 v4 M53.8 54 h3.4" stroke="#3b6ea5" stroke-width="0.9" stroke-linecap="round"/>
+            </g>
+          </g>
+          <!-- head: big chin, famous squint, corncob pipe, sailor cap -->
+          <g class="head">
+            <rect x="36" y="27" width="7" height="8" fill="#f4c49b"/>
+            <circle cx="41" cy="15" r="8.5" fill="#f4c49b"/>
+            <ellipse cx="47" cy="23.5" rx="6.5" ry="4.8" fill="#f4c49b"/>
+            <circle cx="34.8" cy="17" r="1.8" fill="#f4c49b" stroke="#d99e6b" stroke-width="0.6"/>
+            <circle cx="50.5" cy="16.5" r="3" fill="#f4c49b" stroke="#d99e6b" stroke-width="0.7"/>
+            <circle cx="45.2" cy="12.4" r="1.05" fill="#1a2436"/>
+            <path d="M39.2 12.6 q1.6 -1.4 3.2 -0.2" fill="none" stroke="#1a2436" stroke-width="0.9" stroke-linecap="round"/>
+            <path d="M48.2 21 q2 1 3.9 0.3" fill="none" stroke="#8a5a3a" stroke-width="0.9" stroke-linecap="round"/>
+            <path d="M51.5 20.5 L59 22.5" stroke="#6b4a2b" stroke-width="1.8" stroke-linecap="round"/>
+            <rect x="58" y="17.5" width="4.6" height="6" rx="1.2" fill="#8a5f36" stroke="#6b4a2b" stroke-width="0.8"/>
+            <circle class="puff puff-1" cx="61.5" cy="13.5" r="1.6" fill="#cbd5e1"/>
+            <circle class="puff puff-2" cx="64" cy="9" r="2.2" fill="#cbd5e1"/>
+            <path d="M32.6 11.5 a8.6 8.6 0 0 1 16.8 0 z" fill="#fff" stroke="#d6dce6" stroke-width="0.7"/>
+            <ellipse cx="41" cy="11.5" rx="8.8" ry="1.7" fill="#1a2436"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </footer>
 
   <script src="app.js"></script>
 </body>

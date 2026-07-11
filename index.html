@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YourCardJourney — One place. Every credit card tool.</title>
+  <title>YourCardJourney Store</title>
   <meta name="description" content="Powerful tools. One ecosystem. Everything your credit cards should have done automatically." />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://rsms.me/" />
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
   <link rel="stylesheet" href="styles.css" />
@@ -68,15 +69,35 @@
       <g id="i-arrow" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
         <line x1="4" y1="12" x2="20" y2="12"/><polyline points="13,5 20,12 13,19"/>
       </g>
+
     </defs>
   </svg>
 
   <nav class="nav" id="nav">
     <div class="nav-inner">
-      <a href="index.html" class="brand"><svg><use href="#i-logo"/></svg> YourCardJourney</a>
+      <a href="index.html" class="brand" aria-label="YourCardJourney — go to home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg class="ico ico-mark" viewBox="0 0 48 48">
+            <!-- solid ink tile — same language as the page's feature glyphs -->
+            <rect x="1" y="1" width="46" height="46" rx="13" fill="var(--ink)"/>
+            <g fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <!-- the card -->
+              <rect x="9" y="20" width="22" height="15" rx="3.2"/>
+              <path d="M9 25.5h22"/>
+              <!-- the journey: one clean line rising up out of the card -->
+              <path class="mk-rise" d="M15 31.5L36 12" pathLength="100"/>
+              <path d="M36 12L29.5 12M36 12L36 18.5"/>
+            </g>
+          </svg>
+        </span>
+        <span class="brand-text">
+          <span class="brand-word">YourCard<em>Journey</em></span>
+          <span class="brand-tag">One place · Every card tool</span>
+        </span>
+      </a>
       <div class="nav-links">
-        <a href="index.html" class="active">Tools</a>
-        <a href="social.html">Social</a>
+        <a href="#license">Get License</a>
+        <a href="social.html">Connect</a>
       </div>
     </div>
   </nav>
@@ -116,6 +137,7 @@
         <p class="story-open">Every CCGeek has the same story…</p>
         <p class="hero-sub-accent"><span class="esc esc-1">More cards.</span> <span class="esc esc-2">More rewards.</span> <span class="esc esc-3">More chaos.</span></p>
         <p class="story-intro">Introducing tools you've never seen anywhere else.</p>
+        <p class="built-label">Your Private Apps</p>
         <div class="hero-built">
           <span class="pill">
             <span class="pill-chk">
@@ -156,46 +178,19 @@
         </div>
       </div>
       <div class="hero-cta">
-        <a href="#tools" class="btn btn-primary">Explore Tools <svg class="arw" width="17" height="17"><use href="#i-arrow"/></svg></a>
+        <a href="#tools" class="btn btn-primary">Explore Tools <svg class="arw" viewBox="0 0 24 24" width="17" height="17"><use href="#i-arrow"/></svg></a>
+        <a href="#license" class="btn btn-license">Get License <svg class="arw" viewBox="0 0 24 24" width="17" height="17"><use href="#i-arrow"/></svg></a>
         <a href="social.html" class="btn btn-ghost">Join the community →</a>
-      </div>
-
-      <!-- Ferrari-red car: drives left→right, starts slow then accelerates away -->
-      <div class="speedway" aria-hidden="true">
-        <div class="car">
-          <svg viewBox="0 0 132 50" width="132" height="50">
-            <!-- speed trail -->
-            <g class="trail" stroke="#ff2800" stroke-linecap="round">
-              <line x1="-2" y1="24" x2="14" y2="24" stroke-width="2"/>
-              <line x1="0" y1="31" x2="20" y2="31" stroke-width="1.6"/>
-              <line x1="2" y1="17" x2="16" y2="17" stroke-width="1.4"/>
-            </g>
-            <!-- body -->
-            <path d="M18 37c-4 0-6-2-6-5 0-3 3-5 8-6 3-4 8-8 15-9 6-1 12 0 17 3l10 5c9 1 18 2 24 5 4 2 5 4 5 7 0 3-2 5-6 5z"
-                  fill="#ff2800" stroke="#c81e00" stroke-width="1"/>
-            <!-- cabin / windows -->
-            <path d="M40 20c4-2 9-2 13-1l7 4c1 1 0 3-2 3H37c-2 0-3-2-1-4z" fill="#1a2436" opacity="0.9"/>
-            <!-- highlight -->
-            <path d="M20 30c14-3 60-3 78 0" fill="none" stroke="#ff8a6b" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
-            <!-- wheels -->
-            <g class="wheel wheel-front">
-              <circle cx="88" cy="38" r="9" fill="#15181f"/><circle cx="88" cy="38" r="4" fill="#3a3f4a"/>
-              <path d="M88 30v16M80 38h16M82.3 32.3l11.4 11.4M82.3 43.7l11.4-11.4" stroke="#6b7280" stroke-width="1.1"/>
-            </g>
-            <g class="wheel wheel-rear">
-              <circle cx="34" cy="38" r="9" fill="#15181f"/><circle cx="34" cy="38" r="4" fill="#3a3f4a"/>
-              <path d="M34 30v16M26 38h16M28.3 32.3l11.4 11.4M28.3 43.7l11.4-11.4" stroke="#6b7280" stroke-width="1.1"/>
-            </g>
-          </svg>
-        </div>
       </div>
 
       <div class="scroll-cue"><span class="rail"></span></div>
     </section>
 
+    <hr class="rule" />
+
     <section id="tools" class="section tools">
       <div class="section-head reveal">
-        <h2>One place. Every tool.</h2>
+        <h2>One place. <em class="grad-word">One License.</em> Every tool.</h2>
         <p>Each one a small building block that simplifies a single part of your financial life.</p>
       </div>
 
@@ -258,92 +253,172 @@
           </svg></div><h3>Focus Sprint</h3><p>Focus, one sprint at a time.</p></article>
       </div>
 
-      <!-- AFTER the tools: the JCB boost run — tooled up, the car flies -->
-      <div class="speedway speedway-boost" aria-hidden="true">
-        <div class="jcb">
-          <svg viewBox="0 0 140 70" width="140" height="70">
-            <!-- articulated boom + bucket (swings to whack the car) -->
-            <g class="jcb-arm">
-              <path d="M76 32 C88 20 98 15 106 14" fill="none" stroke="#e0a400" stroke-width="6.5" stroke-linecap="round"/>
-              <path d="M106 14 L124 30" fill="none" stroke="#d19a00" stroke-width="5" stroke-linecap="round"/>
-              <path d="M84 24 L98 17" stroke="#9aa3af" stroke-width="3" stroke-linecap="round"/>
-              <circle cx="106" cy="14" r="2.6" fill="#8a6d00"/>
-              <path d="M124 30c8 1 12 6 11 13l-14-2c-2-4-1-8 3-11z" fill="#c98f00" stroke="#a67400" stroke-width="1.2"/>
-              <path d="M121 41l14 2-2 4-13-3z" fill="#8a6d00"/>
-            </g>
-            <!-- tracks -->
-            <rect x="16" y="53" width="74" height="14" rx="7" fill="#232730"/>
-            <rect x="19" y="56" width="68" height="8" rx="4" fill="#3a3f4a"/>
-            <circle cx="28" cy="60" r="3.6" fill="#7b8494"/>
-            <circle cx="45" cy="60" r="3.6" fill="#7b8494"/>
-            <circle cx="62" cy="60" r="3.6" fill="#7b8494"/>
-            <circle cx="78" cy="60" r="3.6" fill="#7b8494"/>
-            <!-- turret base -->
-            <rect x="22" y="46" width="60" height="8" rx="3" fill="#d19a00"/>
-            <!-- counterweight + engine hood -->
-            <path d="M14 46v-12c0-3 2-5 5-5h24v17z" fill="#f7c000" stroke="#d19a00"/>
-            <path d="M16 34h10M16 39h10" stroke="#d19a00" stroke-width="1.6"/>
-            <!-- exhaust -->
-            <rect x="36" y="22" width="3.5" height="8" rx="1.5" fill="#5b616c"/>
-            <!-- cab -->
-            <path d="M44 46V18c0-3 2-5 5-5h18c3 0 5 2 5 5v28z" fill="#f7c000" stroke="#d19a00"/>
-            <path d="M48 18h16v14h-16z" fill="#aed9f7" stroke="#7fb8dc" stroke-width="1"/>
-            <!-- beacon -->
-            <rect x="53" y="8" width="7" height="5" rx="2" fill="#ff8c00"/>
-          </svg>
-        </div>
-        <svg class="impact" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
-          <path d="M20 4v7M20 29v7M4 20h7M29 20h7M9 9l5 5M26 26l5 5M31 9l-5 5M14 26l-5 5"/>
-        </svg>
-        <div class="car">
-          <svg viewBox="0 0 132 50" width="132" height="50">
-            <g class="trail" stroke="#ff2800" stroke-linecap="round">
-              <line x1="-2" y1="24" x2="14" y2="24" stroke-width="2"/>
-              <line x1="0" y1="31" x2="20" y2="31" stroke-width="1.6"/>
-              <line x1="2" y1="17" x2="16" y2="17" stroke-width="1.4"/>
-            </g>
-            <path d="M18 37c-4 0-6-2-6-5 0-3 3-5 8-6 3-4 8-8 15-9 6-1 12 0 17 3l10 5c9 1 18 2 24 5 4 2 5 4 5 7 0 3-2 5-6 5z"
-                  fill="#ff2800" stroke="#c81e00" stroke-width="1"/>
-            <path d="M40 20c4-2 9-2 13-1l7 4c1 1 0 3-2 3H37c-2 0-3-2-1-4z" fill="#1a2436" opacity="0.9"/>
-            <path d="M20 30c14-3 60-3 78 0" fill="none" stroke="#ff8a6b" stroke-width="1.4" stroke-linecap="round" opacity="0.7"/>
-            <g class="wheel wheel-front">
-              <circle cx="88" cy="38" r="9" fill="#15181f"/><circle cx="88" cy="38" r="4" fill="#3a3f4a"/>
-              <path d="M88 30v16M80 38h16M82.3 32.3l11.4 11.4M82.3 43.7l11.4-11.4" stroke="#6b7280" stroke-width="1.1"/>
-            </g>
-            <g class="wheel wheel-rear">
-              <circle cx="34" cy="38" r="9" fill="#15181f"/><circle cx="34" cy="38" r="4" fill="#3a3f4a"/>
-              <path d="M34 30v16M26 38h16M28.3 32.3l11.4 11.4M28.3 43.7l11.4-11.4" stroke="#6b7280" stroke-width="1.1"/>
-            </g>
-          </svg>
-        </div>
-      </div>
     </section>
 
-    <section class="ecosystem">
-      <h2 class="reveal">Eight tools that feel like one product. <em>Every screen connected, nothing to think about.</em></h2>
-      <div class="marquee-mask reveal">
-        <div class="marquee">
-          <span class="chip"><svg><use href="#i-ledger"/></svg> Card Ledger</span>
-          <span class="chip"><svg><use href="#i-vault"/></svg> Card Vault</span>
-          <span class="chip"><svg><use href="#i-gift"/></svg> Gift Card Vault</span>
-          <span class="chip"><svg><use href="#i-wallet"/></svg> Gift Card Loader</span>
-          <span class="chip"><svg><use href="#i-loop"/></svg> Amex Shopwise</span>
-          <span class="chip"><svg><use href="#i-redeem"/></svg> RuPay Redeem</span>
-          <span class="chip"><svg><use href="#i-mail"/></svg> Quick Mailer</span>
-          <span class="chip"><svg><use href="#i-timer"/></svg> Focus Sprint</span>
-          <!-- duplicate for seamless loop -->
-          <span class="chip"><svg><use href="#i-ledger"/></svg> Card Ledger</span>
-          <span class="chip"><svg><use href="#i-vault"/></svg> Card Vault</span>
-          <span class="chip"><svg><use href="#i-gift"/></svg> Gift Card Vault</span>
-          <span class="chip"><svg><use href="#i-wallet"/></svg> Gift Card Loader</span>
-          <span class="chip"><svg><use href="#i-loop"/></svg> Amex Shopwise</span>
-          <span class="chip"><svg><use href="#i-redeem"/></svg> RuPay Redeem</span>
-          <span class="chip"><svg><use href="#i-mail"/></svg> Quick Mailer</span>
-          <span class="chip"><svg><use href="#i-timer"/></svg> Focus Sprint</span>
-        </div>
+    <hr class="rule" />
+
+    <!-- ======= License / pricing ======= -->
+    <section id="license" class="section license">
+      <div class="section-head reveal">
+        <h2>One License. <em class="grad-word">Every app.</em></h2>
+        <p>Pay with an Amazon Pay gift card. A fresh license unlocks all apps under one umbrella.</p>
+      </div>
+
+      <div class="license-grid">
+        <!-- Monthly · ₹500 — "You are a star" Amazon Pay gift card -->
+        <article class="lic-card reveal" style="--grad:linear-gradient(140deg,#ff9c40 0%,#ff7a18 55%,#e85d04 100%);--glow:rgba(255,122,24,.4)">
+          <span class="lic-tag">Monthly</span>
+          <span class="lic-sub">begins after six months</span>
+          <div class="lic-art">
+            <svg viewBox="0 0 340 220" role="img" aria-label="Amazon Pay gift card — You are a star — ₹500">
+              <defs>
+                <clipPath id="top1"><path d="M1,19 Q1,1 19,1 L321,1 Q339,1 339,19 L339,150 L1,150 Z"/></clipPath>
+              </defs>
+              <rect x="1" y="1" width="338" height="218" rx="18" fill="#ffffff" stroke="#e6e8eb"/>
+              <g clip-path="url(#top1)">
+                <rect x="1" y="1" width="338" height="149" fill="#e8481f"/>
+                <!-- radiating cream burst behind the star -->
+                <g stroke="#f7ecd6" stroke-width="2.4" opacity=".28">
+                  <path d="M170 78 L170 -10M170 78 L258 8M170 78 L292 78M170 78 L250 158M170 78 L170 168M170 78 L90 158M170 78 L48 78M170 78 L82 8"/>
+                </g>
+                <!-- layered star: teal, gold, orange -->
+                <g transform="translate(170,78) scale(1.2) translate(-170,-78)"><path d="M170,10 L186.5,57.3 L236.6,58.4 L196.6,88.65 L211.2,136.6 L170,108 L128.8,136.6 L143.4,88.65 L103.4,58.4 L153.5,57.3 Z" fill="#2fb6c9"/></g>
+                <g transform="translate(170,78) scale(1.1) translate(-170,-78)"><path d="M170,10 L186.5,57.3 L236.6,58.4 L196.6,88.65 L211.2,136.6 L170,108 L128.8,136.6 L143.4,88.65 L103.4,58.4 L153.5,57.3 Z" fill="#f4c542"/></g>
+                <path d="M170,10 L186.5,57.3 L236.6,58.4 L196.6,88.65 L211.2,136.6 L170,108 L128.8,136.6 L143.4,88.65 L103.4,58.4 L153.5,57.3 Z" fill="#f2683a"/>
+                <text x="170" y="50" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" letter-spacing=".03em" fill="#f7ecd6" stroke="#bf3d15" stroke-width="0.7" style="paint-order:stroke">YOU ARE A</text>
+                <text x="170" y="110" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="800" letter-spacing=".01em" fill="#f7ecd6" stroke="#bf3d15" stroke-width="0.9" style="paint-order:stroke">STAR</text>
+              </g>
+              <!-- white footer: amazon pay / gift card / amount -->
+              <g transform="translate(24,150)">
+                <g transform="translate(0,28)">
+                  <text x="0" y="0" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" letter-spacing="-.02em" fill="#37424b">amazon</text>
+                  <path d="M1 6 C 18 15, 50 15, 68 5" fill="none" stroke="#ff9900" stroke-width="3.4" stroke-linecap="round"/>
+                  <path d="M68 5 l-6 0.6 M68 5 l-1 6" fill="none" stroke="#ff9900" stroke-width="3.4" stroke-linecap="round"/>
+                  <text x="72" y="0" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="500" fill="#37424b">pay</text>
+                </g>
+                <text x="0" y="52" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="-.01em" fill="#37424b">gift card</text>
+              </g>
+              <text x="316" y="196" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#37424b">₹500</text>
+            </svg>
+          </div>
+        </article>
+
+        <!-- Lifetime · ₹8,000 — "You are a CCGeek" Amazon Pay gift card -->
+        <article class="lic-card reveal" style="--grad:linear-gradient(140deg,#6366f1 0%,#7c3aed 55%,#9333ea 100%);--glow:rgba(124,58,237,.4)">
+          <span class="lic-tag">Lifetime Value</span>
+          <div class="lic-art">
+            <svg viewBox="0 0 340 220" role="img" aria-label="Amazon Pay gift card — You are a CCGeek — ₹8,000">
+              <defs>
+                <clipPath id="top2"><path d="M1,19 Q1,1 19,1 L321,1 Q339,1 339,19 L339,150 L1,150 Z"/></clipPath>
+                <linearGradient id="pg2" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#6366f1"/><stop offset="55%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#9333ea"/>
+                </linearGradient>
+              </defs>
+              <rect x="1" y="1" width="338" height="218" rx="18" fill="#ffffff" stroke="#e6e8eb"/>
+              <g clip-path="url(#top2)">
+                <rect x="1" y="1" width="338" height="149" fill="url(#pg2)"/>
+                <g stroke="#f7ecd6" stroke-width="2.4" opacity=".28">
+                  <path d="M170 78 L170 -10M170 78 L258 8M170 78 L292 78M170 78 L250 158M170 78 L170 168M170 78 L90 158M170 78 L48 78M170 78 L82 8"/>
+                </g>
+                <g transform="translate(170,78) scale(1.2) translate(-170,-78)"><path d="M170,10 L186.5,57.3 L236.6,58.4 L196.6,88.65 L211.2,136.6 L170,108 L128.8,136.6 L143.4,88.65 L103.4,58.4 L153.5,57.3 Z" fill="#2fb6c9"/></g>
+                <g transform="translate(170,78) scale(1.1) translate(-170,-78)"><path d="M170,10 L186.5,57.3 L236.6,58.4 L196.6,88.65 L211.2,136.6 L170,108 L128.8,136.6 L143.4,88.65 L103.4,58.4 L153.5,57.3 Z" fill="#f4c542"/></g>
+                <path d="M170,10 L186.5,57.3 L236.6,58.4 L196.6,88.65 L211.2,136.6 L170,108 L128.8,136.6 L143.4,88.65 L103.4,58.4 L153.5,57.3 Z" fill="#f2683a"/>
+                <text x="170" y="50" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" letter-spacing=".03em" fill="#f7ecd6" stroke="#4c1d95" stroke-width="0.7" style="paint-order:stroke">YOU ARE A</text>
+                <text x="170" y="108" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="800" letter-spacing="-.01em" fill="#f7ecd6" stroke="#4c1d95" stroke-width="0.9" style="paint-order:stroke">CCGeek</text>
+              </g>
+              <g transform="translate(24,150)">
+                <g transform="translate(0,28)">
+                  <text x="0" y="0" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="800" letter-spacing="-.02em" fill="#37424b">amazon</text>
+                  <path d="M1 6 C 18 15, 50 15, 68 5" fill="none" stroke="#ff9900" stroke-width="3.4" stroke-linecap="round"/>
+                  <path d="M68 5 l-6 0.6 M68 5 l-1 6" fill="none" stroke="#ff9900" stroke-width="3.4" stroke-linecap="round"/>
+                  <text x="72" y="0" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="500" fill="#37424b">pay</text>
+                </g>
+                <text x="0" y="52" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="-.01em" fill="#37424b">gift card</text>
+              </g>
+              <text x="316" y="196" text-anchor="end" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="800" fill="#37424b">₹8,000</text>
+            </svg>
+          </div>
+        </article>
       </div>
     </section>
   </main>
+
+  <footer class="footer">
+    <!-- Popeye feed — the spinach boost run closes out the page -->
+    <div class="speedway speedway-boost" aria-hidden="true">
+      <svg class="burst" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round">
+        <path d="M20 4v7M20 29v7M4 20h7M29 20h7M9 9l5 5M26 26l5 5M31 9l-5 5M14 26l-5 5"/>
+      </svg>
+      <div class="walker">
+        <svg viewBox="0 -44 140 140" width="140" height="140">
+          <!-- speed trail (only during the spinach dash) -->
+          <g class="trail" stroke="#22c55e" stroke-linecap="round">
+            <line x1="1" y1="40" x2="17" y2="40" stroke-width="2.4"/>
+            <line x1="3" y1="56" x2="21" y2="56" stroke-width="2"/>
+            <line x1="2" y1="72" x2="16" y2="72" stroke-width="1.8"/>
+          </g>
+          <!-- back arm -->
+          <g class="arm arm-b">
+            <path d="M33 39 L26 48" stroke="#14181d" stroke-width="6.5" stroke-linecap="round"/>
+            <g class="forearm">
+              <path d="M26 48 C22 53 21 58 24 62" fill="none" stroke="#f4c49b" stroke-width="8.5" stroke-linecap="round"/>
+              <circle cx="24.5" cy="63" r="4" fill="#f4c49b"/>
+            </g>
+          </g>
+          <!-- legs -->
+          <g class="leg leg-b">
+            <path d="M37 60 C35 68 34 74 33 82" fill="none" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+            <ellipse cx="34" cy="87.5" rx="7.5" ry="4" fill="#5b3a1e"/>
+          </g>
+          <g class="leg leg-f">
+            <path d="M41 60 C43 68 44 74 45 82" fill="none" stroke="#2563eb" stroke-width="9" stroke-linecap="round"/>
+            <ellipse cx="46" cy="87.5" rx="7.5" ry="4" fill="#7c4a21"/>
+          </g>
+          <!-- torso: sailor shirt, red collar, blue trousers -->
+          <path d="M28 62 C26 46 30 35 39 34 C48 35 52 46 50 62 z" fill="#14181d"/>
+          <path d="M33 38 h12" stroke="#e11d48" stroke-width="3" stroke-linecap="round"/>
+          <rect x="27" y="57" width="24" height="7" rx="2" fill="#2563eb"/>
+          <!-- BIG spinach can, stashed in the trouser pocket until the big moment -->
+          <g transform="translate(33,62)">
+            <g class="can">
+              <rect x="-15" y="-42" width="30" height="42" rx="4" fill="#e5e7eb" stroke="#9ca3af" stroke-width="1"/>
+              <rect x="-15" y="-33" width="30" height="21" fill="#16a34a"/>
+              <text x="0" y="-24.5" text-anchor="middle" font-size="6.4" font-weight="800" fill="#fff" font-family="Inter, Arial, sans-serif" letter-spacing=".3">SPINACH</text>
+              <path d="M-7 -18.5 q7 -6 14 0 q-7 6.2 -14 0z" fill="#a7f3d0"/>
+              <ellipse cx="0" cy="-42" rx="13.8" ry="4" fill="#f3f4f6" stroke="#9ca3af" stroke-width="1"/>
+              <ellipse cx="0" cy="-42" rx="9" ry="2.5" fill="#d1d5db"/>
+            </g>
+          </g>
+          <!-- front arm: the mighty forearm -->
+          <g class="arm arm-f">
+            <path d="M45 39 L53 47" stroke="#14181d" stroke-width="6.5" stroke-linecap="round"/>
+            <g class="forearm">
+              <path d="M53 47 C58 51 60 56 58 61" fill="none" stroke="#f4c49b" stroke-width="9.5" stroke-linecap="round"/>
+              <circle cx="57.5" cy="62" r="4.2" fill="#f4c49b"/>
+              <path d="M55.5 51.5 v4 M53.8 54 h3.4" stroke="#3b6ea5" stroke-width="0.9" stroke-linecap="round"/>
+            </g>
+          </g>
+          <!-- head: big chin, famous squint, corncob pipe, sailor cap -->
+          <g class="head">
+            <rect x="36" y="27" width="7" height="8" fill="#f4c49b"/>
+            <circle cx="41" cy="15" r="8.5" fill="#f4c49b"/>
+            <ellipse cx="47" cy="23.5" rx="6.5" ry="4.8" fill="#f4c49b"/>
+            <circle cx="34.8" cy="17" r="1.8" fill="#f4c49b" stroke="#d99e6b" stroke-width="0.6"/>
+            <circle cx="50.5" cy="16.5" r="3" fill="#f4c49b" stroke="#d99e6b" stroke-width="0.7"/>
+            <circle cx="45.2" cy="12.4" r="1.05" fill="#1a2436"/>
+            <path d="M39.2 12.6 q1.6 -1.4 3.2 -0.2" fill="none" stroke="#1a2436" stroke-width="0.9" stroke-linecap="round"/>
+            <path d="M48.2 21 q2 1 3.9 0.3" fill="none" stroke="#8a5a3a" stroke-width="0.9" stroke-linecap="round"/>
+            <path d="M51.5 20.5 L59 22.5" stroke="#6b4a2b" stroke-width="1.8" stroke-linecap="round"/>
+            <rect x="58" y="17.5" width="4.6" height="6" rx="1.2" fill="#8a5f36" stroke="#6b4a2b" stroke-width="0.8"/>
+            <circle class="puff puff-1" cx="61.5" cy="13.5" r="1.6" fill="#cbd5e1"/>
+            <circle class="puff puff-2" cx="64" cy="9" r="2.2" fill="#cbd5e1"/>
+            <path d="M32.6 11.5 a8.6 8.6 0 0 1 16.8 0 z" fill="#fff" stroke="#d6dce6" stroke-width="0.7"/>
+            <ellipse cx="41" cy="11.5" rx="8.8" ry="1.7" fill="#1a2436"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </footer>
 
   <script src="app.js"></script>
 </body>
