@@ -1,0 +1,191 @@
+/* =========================================================================
+   Karat Board — "Bullion".
+
+   Same Material 3 token names, radii and shadow ramp as card-vault, card-ledger,
+   Amex ShopWise and Deal Broadcast — but the hue is the product. This screen is
+   about gold, so the whole board sits in warm ivory and deep bronze, and the
+   metal itself is the only thing allowed to shine: the brand gradient, the
+   "best rate" ring and the karat numerals.
+
+   Direction has a fixed meaning here and it is the BUYER's meaning, not a
+   trader's: a rate going UP costs you money, so up is warm amber-red and down
+   is green. Nothing else in the UI uses either colour.
+   ========================================================================= */
+:root {
+  --m3-primary:        #8a5f14;   /* deep bronze — AA on ivory at 12px bold */
+  --m3-primary-soft:   #c9971f;   /* mid stop of the foil gradient */
+  --m3-on-primary:     #fffdf8;
+  --m3-primary-container:#f6e7c6;
+  --m3-surface:        #faf6ee;   /* warm ivory page */
+  --m3-surface-1:      #fffdf8;
+  --m3-surface-2:      #f3ece0;
+  --m3-surface-3:      #eae0cf;
+  --m3-surface-variant:#e2d6c0;
+  --m3-on-surface:     #241c10;   /* espresso ink */
+  --m3-on-surface-var: #5d5140;
+  --m3-outline:        #8a7b64;
+  --m3-outline-var:    #e0d5c1;
+  --m3-error:          #b3261e;
+  --m3-warn:           #96620d;
+  --m3-ok:             #0b7350;   /* a rate that fell */
+  --m3-up:             #b3401e;   /* a rate that rose — it costs you */
+  --gold:              #c9971f;
+  --m3-scrim:          rgba(36,28,16,.46);
+  --brand-grad:        linear-gradient(140deg, #f6d06a 0%, #c9971f 48%, #8a5f14 100%);
+  --foil-grad:         linear-gradient(100deg, #8a5f14 0%, #c9971f 38%, #f0cd7a 52%, #c9971f 66%, #8a5f14 100%);
+  --brand-glow:        rgba(201,151,31,.42);
+  --bg-grad:           radial-gradient(1100px 560px at 86% -12%, #fdf0d4 0%, #faf6ee 58%);
+  --shadow-1: 0 1px 2px rgba(70,50,15,.10), 0 1px 3px rgba(70,50,15,.06);
+  --shadow-2: 0 2px 6px rgba(70,50,15,.10), 0 8px 20px rgba(70,50,15,.10);
+  --shadow-3: 0 12px 34px rgba(70,50,15,.18);
+  --r-lg: 24px; --r-md: 16px; --r-sm: 12px;
+  --font: "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --mono: "Cascadia Code", "SF Mono", Consolas, ui-monospace, monospace;
+}
+html[data-theme="dark"] {
+  --m3-primary:        #e8c46a;
+  --m3-primary-soft:   #c9971f;
+  --m3-on-primary:     #3a2a05;
+  --m3-primary-container:#4a3712;
+  --m3-surface:        #14100a;   /* vault dark, warm not blue */
+  --m3-surface-1:      #1e1810;
+  --m3-surface-2:      #2a2115;
+  --m3-surface-3:      #362b1c;
+  --m3-surface-variant:#3d3122;
+  --m3-on-surface:     #f4ecdd;
+  --m3-on-surface-var: #c4b59c;
+  --m3-outline:        #a2947c;
+  --m3-outline-var:    #33291b;
+  --m3-error:          #ff8a7a;
+  --m3-warn:           #f0b64d;
+  --m3-ok:             #48d69c;
+  --m3-up:             #ff9166;
+  --gold:              #e8c46a;
+  --m3-scrim:          rgba(0,0,0,.64);
+  --brand-grad:        linear-gradient(140deg, #f8dc94 0%, #d8a730 48%, #a5751c 100%);
+  --foil-grad:         linear-gradient(100deg, #a5751c 0%, #d8a730 38%, #fbe6ad 52%, #d8a730 66%, #a5751c 100%);
+  --brand-glow:        rgba(216,167,48,.40);
+  --bg-grad:           radial-gradient(1100px 560px at 86% -12%, #2c2110 0%, #14100a 60%);
+  --shadow-1: 0 1px 2px rgba(0,0,0,.45);
+  --shadow-2: 0 4px 14px rgba(0,0,0,.55);
+  --shadow-3: 0 10px 30px rgba(0,0,0,.65);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--font);
+  background: var(--bg-grad); background-color: var(--m3-surface);
+  background-attachment: fixed; color: var(--m3-on-surface);
+  -webkit-font-smoothing: antialiased; min-height: 100vh;
+}
+[hidden] { display: none !important; }
+button { font-family: inherit; cursor: pointer; }
+h1, h2 { letter-spacing: -.3px; }
+a { color: var(--m3-primary); }
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px; justify-content: center;
+  border: none; border-radius: 999px; padding: 10px 20px; font-size: 14px;
+  font-weight: 600; letter-spacing: .2px; transition: filter .15s, background .15s, box-shadow .15s;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled { opacity: .5; cursor: default; }
+.btn-filled { background: var(--m3-primary); color: var(--m3-on-primary); box-shadow: var(--shadow-1); }
+.btn-filled:hover:not(:disabled) { filter: brightness(1.08); box-shadow: var(--shadow-2); }
+.btn-tonal { background: var(--m3-primary-container); color: var(--m3-primary); }
+html[data-theme="dark"] .btn-tonal { color: var(--gold); }
+.btn-tonal:hover:not(:disabled) { filter: brightness(.98); }
+.btn-text { background: transparent; color: var(--m3-primary); }
+.btn-text:hover:not(:disabled) { background: color-mix(in srgb, var(--m3-primary) 10%, transparent); }
+.btn-sm { padding: 7px 14px; font-size: 13px; }
+.icon-btn {
+  width: 40px; height: 40px; border-radius: 50%; border: none; background: transparent;
+  color: var(--m3-on-surface-var); display: grid; place-items: center;
+  transition: background .15s, color .15s;
+}
+.icon-btn:hover { background: var(--m3-surface-3); color: var(--m3-on-surface); }
+:where(button, a, input):focus-visible {
+  outline: 2px solid var(--m3-primary); outline-offset: 2px;
+}
+
+/* ---- Top bar ----
+   Its own panel colour on the tinted page: a faint wash of the primary and a
+   tinted hairline. No hard rule — the same treatment as the sibling apps. */
+.topbar {
+  position: sticky; top: 0; z-index: 30;
+  background: color-mix(in srgb, var(--m3-surface-1) 90%, var(--m3-primary) 5%);
+  backdrop-filter: saturate(1.35) blur(12px);
+  border-bottom: 1px solid color-mix(in srgb, var(--m3-primary) 18%, var(--m3-outline-var));
+  box-shadow: 0 1px 0 rgba(255,255,255,.55) inset, 0 6px 18px -12px var(--brand-glow);
+}
+html[data-theme="dark"] .topbar { box-shadow: 0 6px 20px -14px #000; }
+.topbar-inner {
+  max-width: 1240px; margin: 0 auto; padding: 12px 24px;
+  display: flex; align-items: center; justify-content: space-between; gap: 14px;
+}
+.brand { display: flex; align-items: center; gap: 12px; flex: 0 0 auto; }
+.brand-mark {
+  width: 44px; height: 44px; border-radius: 13px; display: grid; place-items: center;
+  color: #fff; background: var(--brand-grad);
+  box-shadow: 0 7px 16px var(--brand-glow), inset 0 1px 0 rgba(255,255,255,.38);
+  transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+}
+.brand:hover .brand-mark {
+  transform: translateY(-1px); filter: brightness(1.06);
+  box-shadow: 0 10px 24px var(--brand-glow), inset 0 1px 0 rgba(255,255,255,.5);
+}
+.brand:focus-visible { outline: none; }
+.brand:focus-visible .brand-mark { outline: 2px solid var(--m3-primary); outline-offset: 3px; }
+/* Animated brand icon — mirrors the YourCardJourney portal hover motion.
+   Four bullion bars, dropped into the stack bottom row first. */
+.an-bar { transform-box: fill-box; transform-origin: center bottom; }
+.brand:hover .an-bar { animation: an-stack .42s cubic-bezier(.22,1,.36,1) both; }
+.brand:hover .an-bar:nth-of-type(4) { animation-delay: 0s; }
+.brand:hover .an-bar:nth-of-type(2) { animation-delay: .07s; }
+.brand:hover .an-bar:nth-of-type(3) { animation-delay: .13s; }
+.brand:hover .an-bar:nth-of-type(1) { animation-delay: .2s; }
+@keyframes an-stack {
+  from { transform: translateY(-4px) scaleY(.7); opacity: .35; }
+  to   { transform: none; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .brand:hover .an-bar { animation: none; } }
+.brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+.brand-tag {
+  font-size: 10px; font-weight: 800; letter-spacing: 1.6px;
+  color: var(--m3-on-surface-var); text-transform: uppercase;
+}
+.brand-name { font-size: 19px; font-weight: 700; }
+.topbar-actions { display: flex; align-items: center; gap: 10px; }
+
+/* ---- Credit ---- */
+.site-credit {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  margin: 52px auto 8px; padding-top: 28px; border-top: 1px solid var(--m3-outline-var);
+}
+.credit-logo { height: 72px; width: 72px; border-radius: 18px; object-fit: cover; box-shadow: var(--shadow-1); }
+.credit-text { color: var(--m3-on-surface-var); font-size: 13px; }
+.credit-text .handle { color: var(--m3-primary); font-weight: 700; }
+
+/* ---- Dialog ---- */
+.scrim {
+  position: fixed; inset: 0; background: var(--m3-scrim); z-index: 80;
+  display: grid; place-items: center; padding: 20px;
+}
+.dialog {
+  width: min(430px, 100%); background: var(--m3-surface-1); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-3); padding: 24px; border: 1px solid var(--m3-outline-var);
+}
+.dialog h2 { margin: 0 0 4px; font-size: 19px; }
+.dialog p.sub { margin: 0 0 18px; font-size: 13px; color: var(--m3-on-surface-var); }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 22px; }
+
+/* ---- Snackbar ---- */
+.snackbar {
+  position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px);
+  z-index: 90; background: #2b2113; color: #f8f1e2; padding: 13px 20px; border-radius: 12px;
+  box-shadow: var(--shadow-3); font-size: 14px; font-weight: 600; max-width: min(520px, 92vw);
+  display: flex; align-items: center; gap: 10px; opacity: 0; transition: opacity .2s, transform .2s;
+}
+.snackbar.show { opacity: 1; transform: translateX(-50%) translateY(0); }

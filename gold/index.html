@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gold Rate Today — 22K &amp; 24K across 8 jewellers | Karat Board</title>
+  <meta name="description" content="Live 22K and 24K gold rates from Malabar, Tanishq, Kalyan, MMTC-PAMP, Aspect, Bangalore Refinery, PNG and Bhima — on one screen, per gram or per 10 g, refreshed every 15 minutes." />
+  <link rel="canonical" href="https://yourcardjourney.store/gold/" />
+  <meta name="theme-color" content="#8a5f14" />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="YourCardJourney" />
+  <meta property="og:title" content="Gold Rate Today — 22K &amp; 24K across 8 jewellers" />
+  <meta property="og:description" content="Malabar, Tanishq, Kalyan, MMTC-PAMP, Aspect, Bangalore Refinery, PNG and Bhima on one screen. Cheapest rate called out. Refreshed every 15 minutes." />
+  <meta property="og:url" content="https://yourcardjourney.store/gold/" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Gold Rate Today — 22K &amp; 24K across 8 jewellers" />
+  <meta name="twitter:description" content="Eight jewellers' gold rates on one screen, refreshed every 15 minutes." />
+
+  <link rel="icon" href="favicon.svg" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Board-specific bits, built on the shared design tokens. */
+    .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px 40px; }
+
+    /* ---- Headline strip ---- */
+    .heads { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 22px 0 18px; }
+    @media (max-width: 780px) { .heads { grid-template-columns: 1fr; } }
+    .head {
+      background: var(--m3-surface-1); border: 1px solid var(--m3-outline-var);
+      border-radius: var(--r-md); padding: 15px 18px; box-shadow: var(--shadow-1);
+      display: flex; flex-direction: column; gap: 3px; position: relative; overflow: hidden;
+      transition: transform .14s, box-shadow .18s;
+      animation: rise .35s cubic-bezier(.2,.8,.2,1) both;
+    }
+    .head:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+    .head::after {
+      content: ""; position: absolute; inset: 0 auto 0 0; width: 3px; background: var(--foil-grad);
+    }
+    .head .k { font-size: 11px; font-weight: 800; letter-spacing: 1.1px; text-transform: uppercase;
+               color: var(--m3-on-surface-var); }
+    .head .v { font-size: 25px; font-weight: 800; font-family: var(--mono); letter-spacing: -1px; }
+    .head .w { font-size: 12.5px; color: var(--m3-on-surface-var); }
+
+    /* ---- Controls row ---- */
+    .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px;
+           flex-wrap: wrap; margin-bottom: 14px; }
+    .seg { display: inline-flex; background: var(--m3-surface-2); border-radius: 10px; padding: 3px; gap: 3px;
+           border: 1px solid var(--m3-outline-var); }
+    .seg button { border: none; background: transparent; color: var(--m3-on-surface-var);
+      padding: 7px 15px; border-radius: 8px; font: inherit; font-size: 13px; font-weight: 700; }
+    .seg button.on { background: var(--m3-primary); color: var(--m3-on-primary); box-shadow: var(--shadow-1); }
+    .meta { font-size: 12.5px; color: var(--m3-on-surface-var); display: flex; align-items: center; gap: 8px; }
+    .meta .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--m3-ok); }
+    .meta .dot.busy { background: var(--m3-warn); animation: blink 1s ease-in-out infinite; }
+    @keyframes blink { 50% { opacity: .3; } }
+
+    /* ---- The board ---- */
+    .board { display: grid; grid-template-columns: repeat(auto-fill, minmax(288px, 1fr)); gap: 16px; }
+    .card {
+      background: var(--m3-surface-1); border: 1px solid var(--m3-outline-var);
+      border-radius: var(--r-lg); box-shadow: var(--shadow-1); padding: 16px 17px 13px;
+      display: flex; flex-direction: column; gap: 12px; position: relative;
+      transition: transform .14s, box-shadow .18s;
+    }
+    .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-2); }
+    @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .head { animation: none; } }
+    .card.best {
+      border-color: color-mix(in srgb, var(--gold) 65%, transparent);
+      box-shadow: var(--shadow-2), 0 0 0 3px color-mix(in srgb, var(--gold) 20%, transparent);
+    }
+    .card.dim { opacity: .82; }
+
+    .who { display: flex; align-items: center; gap: 11px; }
+    /* One tile treatment for all eight marks: a gold-tinted chip, a bronze
+       hairline and the merchant's shape drawn in the board's own ink. */
+    .mark {
+      width: 38px; height: 38px; border-radius: 11px; flex: 0 0 auto; display: grid; place-items: center;
+      font-weight: 800; font-size: 13px; letter-spacing: .5px; overflow: hidden;
+      color: var(--m3-primary);
+      background: color-mix(in srgb, var(--gold) 15%, var(--m3-surface-2));
+      border: 1px solid color-mix(in srgb, var(--gold) 32%, transparent);
+      transition: background .16s, border-color .16s;
+    }
+    .mark svg { width: 23px; height: 23px; }
+    /* the mark settles into place on hover - the same motion the Karat Board
+       tile in the header uses, staggered piece by piece */
+    .mark svg > * { transform-box: fill-box; transform-origin: center; }
+    .card:hover .mark svg > * { animation: an-mark .42s cubic-bezier(.22,1,.36,1) both; }
+    .card:hover .mark svg > :nth-child(2) { animation-delay: .05s; }
+    .card:hover .mark svg > :nth-child(3) { animation-delay: .1s; }
+    .card:hover .mark svg > :nth-child(4) { animation-delay: .15s; }
+    .card:hover .mark svg > :nth-child(5) { animation-delay: .2s; }
+    @keyframes an-mark { from { transform: scale(.68); } to { transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .card:hover .mark svg > * { animation: none; } }
+    .card:hover .mark {
+      background: color-mix(in srgb, var(--gold) 26%, var(--m3-surface-2));
+      border-color: color-mix(in srgb, var(--gold) 52%, transparent);
+    }
+    .who .nm { flex: 1; min-width: 0; }
+    .who .nm b { display: block; font-size: 14.5px; font-weight: 700; white-space: nowrap;
+                 overflow: hidden; text-overflow: ellipsis; }
+    .who .nm small { font-size: 11.5px; color: var(--m3-on-surface-var); }
+    .state { width: 9px; height: 9px; border-radius: 50%; flex: 0 0 auto; }
+    .state.ok { background: var(--m3-ok); box-shadow: 0 0 0 3px color-mix(in srgb, var(--m3-ok) 18%, transparent); }
+    .state.stale { background: var(--m3-warn); box-shadow: 0 0 0 3px color-mix(in srgb, var(--m3-warn) 18%, transparent); }
+    .state.off { background: var(--m3-outline); }
+    .state.err { background: var(--m3-error); box-shadow: 0 0 0 3px color-mix(in srgb, var(--m3-error) 18%, transparent); }
+
+    /* the two numbers that matter */
+    .rates { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .rate {
+      background: var(--m3-surface-2); border-radius: var(--r-sm); padding: 10px 12px 9px;
+      border: 1px solid transparent;
+    }
+    .rate.k24 { background: color-mix(in srgb, var(--gold) 13%, var(--m3-surface-2));
+                border-color: color-mix(in srgb, var(--gold) 26%, transparent); }
+    .rate .kt { font-size: 10.5px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+                color: var(--m3-on-surface-var); display: flex; align-items: center; gap: 5px; }
+    .rate .amt { font-family: var(--mono); font-size: 19px; font-weight: 800; letter-spacing: -.7px;
+                 margin-top: 3px; }
+    .rate .per { font-size: 11px; color: var(--m3-on-surface-var); }
+    .rate .none { font-family: var(--mono); font-size: 19px; font-weight: 800; color: var(--m3-outline); }
+    .drv { font-size: 9.5px; font-weight: 800; padding: 1px 5px; border-radius: 5px;
+           background: var(--m3-surface-3); color: var(--m3-on-surface-var); letter-spacing: .4px; }
+
+    /* ---- Buyback ----
+       Not another block of text under every merchant - the cut is a filter, and
+       the 24K tile itself flips over to answer it. Off by default, so the board
+       stays a board. */
+    .cut-row { display: flex; justify-content: flex-end; margin-top: -5px; }
+    .cuts { display: inline-flex; gap: 3px; padding: 2px; border-radius: 8px;
+            background: var(--m3-surface-2); border: 1px solid var(--m3-outline-var); }
+    .cuts button { border: none; background: transparent; font: inherit; font-size: 10.5px;
+      font-weight: 800; letter-spacing: .3px; padding: 3px 9px; border-radius: 6px;
+      color: var(--m3-on-surface-var); transition: background .14s, color .14s; }
+    .cuts button:hover { color: var(--m3-ok); }
+    .cuts button.on { background: var(--m3-ok); color: var(--m3-surface-1); }
+
+    .rate.k24.buyback {
+      background: color-mix(in srgb, var(--m3-ok) 13%, var(--m3-surface-2));
+      border-color: color-mix(in srgb, var(--m3-ok) 32%, transparent);
+    }
+    .rate.k24.buyback .amt { color: var(--m3-ok); }
+    .rate.flip { animation: flip .4s cubic-bezier(.4, 0, .2, 1); }
+    @keyframes flip {
+      0%   { transform: perspective(420px) rotateY(0); }
+      50%  { transform: perspective(420px) rotateY(-88deg); }
+      100% { transform: perspective(420px) rotateY(0); }
+    }
+    @media (prefers-reduced-motion: reduce) { .rate.flip { animation: none; } }
+
+    .err-note { font-size: 11.5px; line-height: 1.5; color: var(--m3-error); word-break: break-word; }
+
+    .foot { display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            border-top: 1px solid var(--m3-outline-var); padding-top: 9px; margin-top: auto; }
+    .foot .when { font-size: 11px; color: var(--m3-on-surface-var); }
+    .foot .acts { display: flex; gap: 2px; }
+    .foot .acts button { width: 30px; height: 30px; border-radius: 8px; border: none;
+      background: transparent; color: var(--m3-on-surface-var); display: grid; place-items: center; }
+    .foot .acts button:hover { background: var(--m3-surface-3); color: var(--m3-primary); }
+
+    .badge {
+      position: absolute; top: -9px; right: 14px; font-size: 9.5px; font-weight: 900;
+      letter-spacing: 1px; padding: 3px 9px; border-radius: 999px; color: #fff;
+      background: var(--foil-grad); box-shadow: 0 3px 9px var(--brand-glow);
+    }
+    .badge.manual { background: var(--m3-surface-3); color: var(--m3-on-surface-var);
+                    box-shadow: none; border: 1px solid var(--m3-outline-var); }
+
+    .spark { display: block; width: 100%; height: 24px; color: var(--m3-primary); opacity: .75; }
+
+    @media (max-width: 560px) {
+      .topbar-inner { padding: 10px 14px; gap: 8px; }
+      .brand-mark { width: 38px; height: 38px; border-radius: 11px; }
+      .brand-name { font-size: 17px; }
+      .wrap { padding: 0 14px 32px; }
+      .heads { gap: 10px; margin: 16px 0 14px; }
+      .board { grid-template-columns: 1fr; }
+      .fields { grid-template-columns: 1fr; }
+    }
+
+    /* dialog fields */
+    .fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .fld { display: flex; flex-direction: column; gap: 5px; }
+    .fld label { font-size: 11px; font-weight: 800; letter-spacing: .9px; text-transform: uppercase;
+                 color: var(--m3-on-surface-var); }
+    .fld input {
+      font: inherit; font-family: var(--mono); color: var(--m3-on-surface);
+      background: var(--m3-surface-2); border: 1px solid var(--m3-outline-var);
+      border-radius: 11px; padding: 11px 13px; outline: none; width: 100%;
+    }
+    .fld input:focus { border-color: var(--m3-primary); background: var(--m3-surface-3); }
+    .disclaimer {
+      max-width: 62ch; margin: 0 0 4px; text-align: center;
+      font-size: 12px; line-height: 1.65; color: var(--m3-on-surface-var);
+    }
+    .site-credit .handle { text-decoration: none; }
+    .site-credit .handle:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <!-- a stack of bullion bars -->
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff"
+               stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path class="an-bar" d="M9.6 4.6h6.2l1.5 4.2H8.1z" fill="#fff" fill-opacity=".28"/>
+            <path class="an-bar" d="M4.4 11.1h6.2l1.5 4.2H2.9z" fill="#fff" fill-opacity=".28"/>
+            <path class="an-bar" d="M13.4 11.1h6.2l1.5 4.2h-9.2z" fill="#fff" fill-opacity=".28"/>
+            <path class="an-bar" d="M8.9 17.6h6.2l1.5 4.2H7.4z" fill="#fff" fill-opacity=".28"/>
+          </svg>
+        </span>
+        <div class="brand-text">
+          <small class="brand-tag">YOUR CARD JOURNEY</small>
+          <span class="brand-name">Karat Board</span>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span class="meta" id="status" title="Loading…"><span class="dot"></span></span>
+        <button class="btn btn-tonal btn-sm" id="refreshBtn" title="Re-read every merchant now">
+          <svg viewBox="0 0 24 24" width="17" height="17"><path fill="currentColor" d="M12 5V2L7 6l5 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7Z"/></svg>
+          <span>Refresh</span>
+        </button>
+        <button class="icon-btn" id="themeBtn" title="Toggle theme" aria-label="Toggle theme">
+          <svg class="i-sun" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z"/><path d="M12 2v2m0 16v2M4 12H2m20 0h-2M5.6 5.6 4.2 4.2m15.6 15.6-1.4-1.4M5.6 18.4 4.2 19.8M19.8 4.2l-1.4 1.4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="heads" id="heads"></section>
+
+    <div class="bar">
+      <div class="seg" role="group" aria-label="Quantity">
+        <button data-unit="1" class="on">Per gram</button>
+        <button data-unit="10">Per 10 g</button>
+      </div>
+      <span class="meta" id="statusText">Loading…</span>
+    </div>
+
+    <section class="board" id="board"></section>
+
+    <footer class="site-credit">
+      <p class="disclaimer">
+        Rates are read from each merchant's own public page — tap any tile's ↗ to see
+        the source. They are indicative and move through the day, so check with the
+        merchant before you buy. MMTC-PAMP's figure is a minted-product price and
+        Aspect's is a bullion rate, so neither is a jeweller's counter rate.
+      </p>
+      <span class="credit-text">
+        Shared by <a class="handle" href="https://yourcardjourney.store/">@YourCardJourney</a>
+      </span>
+    </footer>
+  </main>
+
+  <div class="scrim" id="manualScrim" hidden>
+    <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+      <h2 id="mTitle">Key in a rate</h2>
+      <p class="sub" id="mSub"></p>
+      <div class="fields">
+        <div class="fld"><label for="m22">22K buy</label><input id="m22" inputmode="decimal" placeholder="blank to derive" /></div>
+        <div class="fld"><label for="m24">24K buy</label><input id="m24" inputmode="decimal" placeholder="blank to derive" /></div>
+        <div class="fld"><label for="s22">22K sell</label><input id="s22" inputmode="decimal" placeholder="optional" /></div>
+        <div class="fld"><label for="s24">24K sell</label><input id="s24" inputmode="decimal" placeholder="optional" /></div>
+      </div>
+      <div class="dialog-actions">
+        <button class="btn btn-text" id="mClear">Clear</button>
+        <button class="btn btn-text" id="mCancel">Cancel</button>
+        <button class="btn btn-filled" id="mSave">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="snackbar" id="snack"><span id="snackText"></span></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

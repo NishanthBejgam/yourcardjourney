@@ -1,0 +1,150 @@
+{
+ "merchants": [
+  {
+   "id": "malabar",
+   "name": "Malabar Gold & Diamonds",
+   "short": "Malabar",
+   "site": "https://malabargoldanddiamonds.com/in/pan-india/en/live-gold-rate.html",
+   "note": "One India One Gold Rate, straight off the getMetalRate GraphQL call the page itself makes.",
+   "adapter": "raw_regex",
+   "rate": {
+    "fetched": "2026-08-25T17:32:51+05:30",
+    "buy24": 16375.0,
+    "buy22": 15010.0,
+    "ok": true
+   },
+   "spark": [
+    16375.0
+   ]
+  },
+  {
+   "id": "tanishq",
+   "name": "Tanishq",
+   "short": "Tanishq",
+   "site": "https://www.tanishq.co.in/gold-rate.html?lang=en_IN",
+   "note": "Tanishq publishes 22K only; 24K is derived.",
+   "adapter": "text_regex",
+   "rate": {
+    "fetched": "2026-08-25T17:32:52+05:30",
+    "buy22": 15055.0,
+    "buy24": 16423.64,
+    "derived24": true,
+    "ok": true
+   },
+   "spark": [
+    16423.64
+   ]
+  },
+  {
+   "id": "kalyan",
+   "name": "Kalyan Jewellers (Candere)",
+   "short": "Kalyan",
+   "site": "https://www.candere.com/gold-rate-today/hyderabad",
+   "note": "Hyderabad board - swap the city in the URL to change market.",
+   "adapter": "text_regex",
+   "rate": {
+    "fetched": "2026-08-25T17:32:53+05:30",
+    "buy24": 16386.0,
+    "buy22": 15010.0,
+    "ok": true
+   },
+   "spark": [
+    16386.0
+   ]
+  },
+  {
+   "id": "mmtc",
+   "name": "MMTC-PAMP",
+   "short": "MMTC-PAMP",
+   "site": "https://www.mmtcpamp.com/",
+   "note": "Minted product price (premium in, taxes out) - sits above spot.",
+   "adapter": "pdf_regex",
+   "rate": {
+    "fetched": "2026-08-25T17:32:54+05:30",
+    "buy24": 17641.75,
+    "buy22": 16288.83,
+    "ok": true
+   },
+   "spark": [
+    17641.75
+   ]
+  },
+  {
+   "id": "aspect",
+   "name": "Aspect Bullion & Refinery",
+   "short": "Aspect",
+   "site": "https://aspectbullion.com",
+   "note": "The live ticker itself: Ask on the gold symbol plus Aspect's own published premium, per 10 g. 22K is derived.",
+   "adapter": "socketio_livedata",
+   "rate": {
+    "fetched": "2026-08-25T17:32:57+05:30",
+    "buy24": 16427.6,
+    "buy22": 15058.63,
+    "derived22": true,
+    "ok": true
+   },
+   "spark": [
+    16411.2,
+    16427.6
+   ]
+  },
+  {
+   "id": "brpl",
+   "name": "Bangalore Refinery",
+   "short": "BRPL",
+   "site": "https://bangalorerefinery.com/pages/todays-rates",
+   "note": "Wholesale, 18% GST extra. The only board here that prints a buyback.",
+   "adapter": "pairs_json",
+   "rate": {
+    "fetched": "2026-08-25T17:32:59+05:30",
+    "buy24": 16422.0,
+    "buy22": 15215.0,
+    "sell22": 15020.0,
+    "ok": true
+   },
+   "spark": [
+    16422.0
+   ]
+  },
+  {
+   "id": "png",
+   "name": "PNG Jewellers",
+   "short": "PNG",
+   "site": "https://pngjewellers.com",
+   "note": "Rate applies to online purchases.",
+   "adapter": "text_regex",
+   "rate": {
+    "fetched": "2026-08-25T17:32:59+05:30",
+    "buy24": 16189.0,
+    "buy22": 14984.0,
+    "ok": true
+   },
+   "spark": [
+    16189.0
+   ]
+  },
+  {
+   "id": "bhima",
+   "name": "Bhima Jewellers",
+   "short": "Bhima",
+   "site": "https://bhimagold.com",
+   "note": "Online gold rate as published on the storefront.",
+   "adapter": "raw_regex",
+   "rate": {
+    "fetched": "2026-08-25T17:33:01+05:30",
+    "buy24": 16379.0,
+    "buy22": 13999.0,
+    "ok": true
+   },
+   "spark": [
+    16379.0
+   ]
+  }
+ ],
+ "lastRefresh": "2026-08-25T17:33:01+05:30",
+ "refreshMinutes": 15,
+ "refreshing": false,
+ "now": "2026-08-25T17:33:02+05:30",
+ "static": true,
+ "builtAt": "2026-08-25T17:33:02+05:30"
+}

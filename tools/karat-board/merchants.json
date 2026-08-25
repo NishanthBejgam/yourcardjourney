@@ -1,0 +1,157 @@
+{
+  "_readme": [
+    "Every merchant below is a self-contained recipe. Nothing about a merchant is",
+    "hardcoded in app.py - change a URL or a pattern here, hit Refresh, done.",
+    "",
+    "  site      the page a human opens (the tile links here)",
+    "  source.adapter  how to read the numbers:",
+    "     text_regex  strip the HTML to plain text, then match",
+    "     raw_regex   match the raw response (for rates buried in embedded JSON)",
+    "     pairs_json  body is [[label, value], ...]; match on label",
+    "     pdf_regex   pull the text out of a PDF, then match",
+    "     socketio_livedata  read one event off a live socket.io ticker, then add",
+    "                        the premium the merchant publishes (Aspect)",
+    "     link_only   nothing to scrape - tile links out (or key a rate in by hand)",
+    "  source.fetch    curl (Windows curl.exe - gets past bot walls) or urllib",
+    "  buy/sell.k24/k22  { pattern, divide }  pattern group 1 is the number,",
+    "                    divide turns it into a per-gram rate (10 for a 10g price)",
+    "  deriveK24  true = the site only prints 22K, so 24K = 22K x 24/22",
+    "  deriveK22  true = the site only prints fine 999, so 22K = 24K x 22/24"
+  ],
+  "refreshMinutes": 60,
+  "merchants": [
+    {
+      "id": "malabar",
+      "name": "Malabar Gold & Diamonds",
+      "short": "Malabar",
+      "site": "https://malabargoldanddiamonds.com/in/pan-india/en/live-gold-rate.html",
+      "note": "One India One Gold Rate, straight off the getMetalRate GraphQL call the page itself makes.",
+      "source": {
+        "adapter": "raw_regex",
+        "fetch": "curl",
+        "url": "https://www.malabargoldanddiamonds.com/graphql-magento?query=query%20getMetalRate(%24filter%3A%20MetalRateFilterInput)%20%7B%20getMetalRate(filter%3A%20%24filter)%20%7B%20items%20%7B%20entry_date%20entry_time%20purity%20unit%20rate%20%7D%20%7D%20%7D&variables=%7B%22filter%22%3A%7B%22metal_type%22%3A%22gold%22%2C%22country%22%3A%22India%22%7D%7D",
+        "buy": {
+          "k24": { "pattern": "\"purity\":\"24k\",\"unit\":\"G\",\"rate\":\"([\\d.]+)\"", "divide": 1 },
+          "k22": { "pattern": "\"purity\":\"22k\",\"unit\":\"G\",\"rate\":\"([\\d.]+)\"", "divide": 1 }
+        }
+      }
+    },
+    {
+      "id": "tanishq",
+      "name": "Tanishq",
+      "short": "Tanishq",
+      "site": "https://www.tanishq.co.in/gold-rate.html?lang=en_IN",
+      "note": "Tanishq publishes 22K only; 24K is derived.",
+      "source": {
+        "adapter": "text_regex",
+        "fetch": "curl",
+        "url": "https://www.tanishq.co.in/gold-rate.html?lang=en_IN",
+        "deriveK24": true,
+        "buy": {
+          "k22": { "pattern": "22\\s*Kt\\s*Gold\\s*Rate.{0,400}?1\\s*G\\s*₹\\s*([\\d,]+)", "divide": 1 }
+        }
+      }
+    },
+    {
+      "id": "kalyan",
+      "name": "Kalyan Jewellers (Candere)",
+      "short": "Kalyan",
+      "site": "https://www.candere.com/gold-rate-today/hyderabad",
+      "note": "Hyderabad board - swap the city in the URL to change market.",
+      "source": {
+        "adapter": "text_regex",
+        "fetch": "curl",
+        "url": "https://www.candere.com/gold-rate-today/hyderabad",
+        "buy": {
+          "k24": { "pattern": "₹([\\d,]+)\\s*/10gm\\s*24\\s*Karat", "divide": 10 },
+          "k22": { "pattern": "₹([\\d,]+)\\s*/10gm\\s*22\\s*Karat", "divide": 10 }
+        }
+      }
+    },
+    {
+      "id": "mmtc",
+      "name": "MMTC-PAMP",
+      "short": "MMTC-PAMP",
+      "site": "https://www.mmtcpamp.com/",
+      "note": "Minted product price (premium in, taxes out) - sits above spot.",
+      "source": {
+        "adapter": "pdf_regex",
+        "fetch": "urllib",
+        "url": "https://cem-cms-data.s3.ap-south-1.amazonaws.com/today_price_list.pdf",
+        "buy": {
+          "k24": { "pattern": "10 gm Gold 999\\.9 Minted Bar Lotus Minted Card \\(923\\)\\s*10\\s*([\\d,]+\\.\\d\\d)", "divide": 10 },
+          "k22": { "pattern": "8 gm Gold 916\\.7 Minted Coin 22 KT Minted Card\\s*8\\s*([\\d,]+\\.\\d\\d)", "divide": 8 }
+        }
+      }
+    },
+    {
+      "id": "aspect",
+      "name": "Aspect Bullion & Refinery",
+      "short": "Aspect",
+      "site": "https://aspectbullion.com",
+      "note": "The live ticker itself: Ask on the gold symbol plus Aspect's own published premium, per 10 g. 22K is derived.",
+      "source": {
+        "adapter": "socketio_livedata",
+        "url": "https://aspectbullion.com:8022",
+        "event": "LiveData",
+        "premiumUrl": "https://aspectbullion.com/webservice/webservice.asmx",
+        "premiumAction": "GetRatePremiumForFrontNew",
+        "deriveK22": true,
+        "buy": {
+          "k24": { "symbol": "gold", "premiumName": "FINE GOLD 999", "divide": 10 }
+        }
+      }
+    },
+    {
+      "id": "brpl",
+      "name": "Bangalore Refinery",
+      "short": "BRPL",
+      "site": "https://bangalorerefinery.com/pages/todays-rates",
+      "note": "Wholesale, 18% GST extra. The only board here that prints a buyback.",
+      "source": {
+        "adapter": "pairs_json",
+        "fetch": "curl",
+        "url": "https://www.bangalorerefinery.com/cdn/shop/files/rates.txt",
+        "buy": {
+          "k24": { "pattern": "24K \\(9999\\) 10 g GoldBar", "divide": 10 },
+          "k22": { "pattern": "22K \\(916\\) Gold Coin 8 gm", "divide": 8 }
+        },
+        "sell": {
+          "k22": { "pattern": "BuyBack Gold Rate \\(gm\\)", "divide": 1 }
+        }
+      }
+    },
+    {
+      "id": "png",
+      "name": "PNG Jewellers",
+      "short": "PNG",
+      "site": "https://pngjewellers.com",
+      "note": "Rate applies to online purchases.",
+      "source": {
+        "adapter": "text_regex",
+        "fetch": "curl",
+        "url": "https://pngjewellers.com",
+        "buy": {
+          "k24": { "pattern": "24K Gold\\s*₹\\s*([\\d,]+)", "divide": 1 },
+          "k22": { "pattern": "22K Gold\\s*₹\\s*([\\d,]+)", "divide": 1 }
+        }
+      }
+    },
+    {
+      "id": "bhima",
+      "name": "Bhima Jewellers",
+      "short": "Bhima",
+      "site": "https://bhimagold.com",
+      "note": "Online gold rate as published on the storefront.",
+      "source": {
+        "adapter": "raw_regex",
+        "fetch": "curl",
+        "url": "https://www.bhimagold.com/",
+        "buy": {
+          "k24": { "pattern": "Online Gold Rate 24 KT \\(999\\)\",\"rate\":\"₹([\\d,\\.]+)/g", "divide": 1 },
+          "k22": { "pattern": "Online Gold Rate 22 KT \\(916\\)\",\"rate\":\"₹([\\d,\\.]+)/g", "divide": 1 }
+        }
+      }
+    }
+  ]
+}
