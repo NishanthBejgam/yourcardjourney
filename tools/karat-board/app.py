@@ -625,31 +625,56 @@ def bind_server(url):
     return None
 
 
-def seed_from(url):
-    """Start a build from the rates already published, not from nothing.
+def _read_board_json(kind, ref):
+    if kind == "file":
+        if not os.path.isfile(ref):
+            return None
+        with open(ref, encoding="utf-8") as fh:
+            return json.load(fh)
+    return json.loads(fetch(ref, "urllib", timeout=20).decode("utf-8", "replace"))
 
-    A CI runner is blank every time, so a merchant that blocks datacenter IPs
-    (Cloudflare sits in front of two of these) would show an empty tile on every
-    single build. Seeding from the live rates.json means the last good number
-    survives, marked stale with the time it was actually read - which is honest,
-    where a blank tile is just unhelpful.
+
+def seed_board(sources):
+    """Start a build from the best rates already known, not from nothing.
+
+    A CI runner is blank every time, and Cloudflare refuses two of these
+    merchants from any datacenter IP - so without a seed those two tiles would
+    be empty on every single build. Seeding keeps their last good number, which
+    refresh_all() then marks stale with the time it was really read.
+
+    Two sources, because neither alone is enough: the rates.json committed in
+    the repo (which a sweep from a residential connection refreshes, and which
+    is always present at checkout) and the one currently published (fresher for
+    everything that is not blocked). Per merchant, the later read wins.
     """
-    try:
-        raw = fetch(url, "urllib", timeout=20)
-        published = json.loads(raw.decode("utf-8", "replace"))
-    except Exception as exc:
-        print("seed: could not read %s (%s) - starting cold" % (url, exc))
-        return
+    best = {}
+    for kind, ref in sources:
+        if not ref:
+            continue
+        try:
+            data = _read_board_json(kind, ref)
+        except Exception as exc:
+            print("seed: skipped %s %s (%s)" % (kind, ref, exc))
+            continue
+        if not data:
+            continue
+        for m in data.get("merchants", []):
+            rate = m.get("rate") or {}
+            if not (rate.get("buy24") or rate.get("buy22")):
+                continue
+            held = best.get(m["id"])
+            if not held or (rate.get("fetched") or "") > (held.get("fetched") or ""):
+                best[m["id"]] = rate
 
+    if not best:
+        print("seed: nothing to carry over - starting cold")
+        return
     board = load_board()
     if board["rates"]:
         return
-    for m in published.get("merchants", []):
-        rate = m.get("rate") or {}
-        if rate.get("buy24") or rate.get("buy22"):
-            board["rates"][m["id"]] = rate
+    board["rates"] = best
     save_board(board)
-    print("seed: carried %d rates over from %s" % (len(board["rates"]), url))
+    print("seed: carried %d rates over (%s)" % (len(best), ", ".join(sorted(best))))
 
 
 def snapshot(out_dir, every_minutes):
@@ -659,8 +684,8 @@ def snapshot(out_dir, every_minutes):
     does that work up front and leaves a file behind. This is what turns the app
     into something GitHub Pages (or any static host) can serve for nothing.
     """
-    if os.environ.get("KB_SEED_URL"):
-        seed_from(os.environ["KB_SEED_URL"])
+    seed_board([("file", os.environ.get("KB_SEED_FILE")),
+                ("url", os.environ.get("KB_SEED_URL"))])
     refresh_all()
     state = board_state()
     state["static"] = True
