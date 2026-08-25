@@ -124,22 +124,49 @@ def fetch(url, mode="urllib", timeout=40):
     through. So the fetch mode is per-merchant config, not a global choice.
     """
     if mode == "curl":
+        # The status code is appended after a marker: curl exits 0 on a 403, and
+        # a Cloudflare block page parsed as HTML looks exactly like "the pattern
+        # stopped matching". Those are very different problems, so name them.
         out = subprocess.run(
             [CURL, "-sL", "--compressed", "--max-time", str(timeout),
-             "-A", UA, "-H", "Accept-Language: en-IN,en;q=0.9", url],
+             "-A", UA, "-H", "Accept-Language: en-IN,en;q=0.9",
+             "-w", "\n%s%%{http_code}" % _STATUS_MARK, url],
             capture_output=True, timeout=timeout + 15,
         )
         if out.returncode != 0:
             raise RuntimeError("curl exit %d %s" % (out.returncode, out.stderr[:120]))
-        if not out.stdout:
+        body, status = _split_status(out.stdout)
+        if status >= 400:
+            raise RuntimeError("HTTP %d - the site refused us (a bot wall, most "
+                               "likely; this IP is not welcome)" % status)
+        if not body:
             raise RuntimeError("empty response")
-        return out.stdout
+        return body
 
     req = urllib.request.Request(url, headers={
         "User-Agent": UA, "Accept-Language": "en-IN,en;q=0.9",
     })
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
-        return resp.read()
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return resp.read()
+    except urllib.error.HTTPError as exc:
+        raise RuntimeError("HTTP %d - the site refused us" % exc.code)
+
+
+_STATUS_MARK = b"__KB_HTTP__".decode()
+
+
+def _split_status(raw):
+    """Peel the trailing "\n__KB_HTTP__<code>" that -w appended."""
+    mark = _STATUS_MARK.encode()
+    at = raw.rfind(mark)
+    if at < 0:
+        return raw, 0
+    try:
+        status = int(raw[at + len(mark):].strip() or 0)
+    except ValueError:
+        status = 0
+    return raw[:at].rstrip(b"\r\n"), status
 
 
 def to_text(raw):
@@ -598,6 +625,33 @@ def bind_server(url):
     return None
 
 
+def seed_from(url):
+    """Start a build from the rates already published, not from nothing.
+
+    A CI runner is blank every time, so a merchant that blocks datacenter IPs
+    (Cloudflare sits in front of two of these) would show an empty tile on every
+    single build. Seeding from the live rates.json means the last good number
+    survives, marked stale with the time it was actually read - which is honest,
+    where a blank tile is just unhelpful.
+    """
+    try:
+        raw = fetch(url, "urllib", timeout=20)
+        published = json.loads(raw.decode("utf-8", "replace"))
+    except Exception as exc:
+        print("seed: could not read %s (%s) - starting cold" % (url, exc))
+        return
+
+    board = load_board()
+    if board["rates"]:
+        return
+    for m in published.get("merchants", []):
+        rate = m.get("rate") or {}
+        if rate.get("buy24") or rate.get("buy22"):
+            board["rates"][m["id"]] = rate
+    save_board(board)
+    print("seed: carried %d rates over from %s" % (len(board["rates"]), url))
+
+
 def snapshot(out_dir, every_minutes):
     """Run one sweep and write rates.json - the whole of the hosted site's data.
 
@@ -605,6 +659,8 @@ def snapshot(out_dir, every_minutes):
     does that work up front and leaves a file behind. This is what turns the app
     into something GitHub Pages (or any static host) can serve for nothing.
     """
+    if os.environ.get("KB_SEED_URL"):
+        seed_from(os.environ["KB_SEED_URL"])
     refresh_all()
     state = board_state()
     state["static"] = True

@@ -48,6 +48,10 @@ jobs:
         env:
           KB_EVERY: "15"            # what the page tells visitors
           KB_STATE: ${{ runner.temp }}/board.json
+          # A runner is blank every time. Two of these merchants sit behind
+          # Cloudflare and refuse datacenter IPs, so carry the last published
+          # numbers in and let them go stale visibly rather than vanish.
+          KB_SEED_URL: https://yourcardjourney.store/gold/rates.json
         run: python tools/karat-board/build_site.py gold
 
       - uses: actions/upload-pages-artifact@v3
