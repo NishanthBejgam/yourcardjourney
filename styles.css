@@ -647,6 +647,23 @@ a { color: inherit; text-decoration: none; }
 }
 .btn-license:hover .arw { transform: translateX(4px); }
 
+/* Download Tools — the direct route to the setup guide, sits beside Get License */
+.btn-download {
+  color: var(--ink);
+  border: 1px solid var(--line-2);
+  background: var(--bg);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.btn-download .dlic { transition: transform 0.3s var(--ease); color: #6366f1; }
+.btn-download:hover {
+  transform: translateY(-2px);
+  border-color: #8b8bf5;
+  box-shadow: 0 12px 26px rgba(99, 102, 241, 0.18);
+}
+.btn-download:hover .dlic { transform: translateY(3px); }
+.btn-primary .dlic { transition: transform 0.3s var(--ease); }
+.btn-primary:hover .dlic { transform: translateY(3px); }
+
 .scroll-cue {
   margin-top: 30px;
   display: inline-flex;
@@ -901,6 +918,27 @@ a { color: inherit; text-decoration: none; }
   transform: translateY(-6px);
   border-color: var(--line-2);
   box-shadow: 0 24px 50px var(--glow, rgba(0,0,0,0.08));
+}
+/* the whole pricing card is a doorway to the download page */
+.lic-link { position: absolute; inset: 0; z-index: 3; border-radius: var(--radius); }
+.lic-card:has(.lic-link) { cursor: pointer; }
+.lic-link:focus-visible { outline: 2px solid var(--ink); outline-offset: -3px; }
+
+/* closing line under the pricing pair — one clear way forward */
+.lic-next {
+  margin: 40px auto 0;
+  max-width: 880px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  text-align: center;
+}
+.lic-next p {
+  color: var(--ink-2);
+  font-size: 16px;
+  line-height: 1.6;
+  max-width: 52ch;
 }
 
 .lic-sub {
