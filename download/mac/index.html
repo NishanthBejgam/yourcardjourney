@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Download — YourCardJourney</title>
-  <meta name="description" content="Download and set up your YourCardJourney tools." />
+  <title>Download for Mac — YourCardJourney</title>
+  <meta name="description" content="Download and set up your YourCardJourney tools on a Mac." />
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
   <link rel="preconnect" href="https://rsms.me/" />
   <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-  <link rel="stylesheet" href="../styles.css" />
+  <link rel="stylesheet" href="../../styles.css" />
 </head>
 <body>
 
 <style>
-  /* Download page — scoped. Uses the site's own tokens, adds none. */
+  /* Download page (macOS) — scoped. Same components as the Windows page so the
+     two read as one guide in two flavours; only the content differs. */
   .dl{
     --amber:#8a5a10; --amber-bg:#fdf6e7; --amber-line:#efdcb4;
     --ok:#0f6b4f; --ok-bg:#e9f6f0; --ok-line:#cfe6db;
@@ -126,7 +127,7 @@
 
   .dl-path{
     display:block;
-    font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;
+    font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
     font-size:13.4px;letter-spacing:-0.01em;
     background:var(--tile);color:var(--tile-ink);
     border-radius:12px;padding:12px 14px;
@@ -138,6 +139,20 @@
     background:var(--tile);border-radius:12px;padding:12px 14px;
   }
   .dl-crumb svg{width:13px;height:13px;color:var(--muted);flex:none;}
+
+  /* Two ways to do the same thing, side by side — which one a Mac shows
+     depends on its macOS version, and a user cannot tell in advance. */
+  .dl-fork{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .dl-fork > div{
+    border:1px solid var(--line-2);border-radius:14px;padding:14px 15px;
+    display:flex;flex-direction:column;gap:7px;background:var(--bg-soft);
+  }
+  .dl-fork h4{
+    font-size:12px;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;
+  }
+  .dl-fork p{font-size:14.4px;line-height:1.55;color:var(--ink-2);}
+  @media (max-width:640px){ .dl-fork{grid-template-columns:1fr;} }
 
   .dl-callout{
     border-radius:14px;padding:13px 15px;
@@ -174,24 +189,24 @@
 
 <main class="dl">
 
-  <a class="dl-back" href="../">
+  <a class="dl-back" href="../../">
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
     YourCardJourney
   </a>
 
   <header class="dl-hero">
     <div class="dl-eyebrow">Licensed users</div>
-    <h1>Download &amp; set up your tools</h1>
-    <p>Everything you are licensed for sits in one folder. Read the five steps, download the setup file, then send me your machine ID for a licence code.</p>
+    <h1>Download &amp; set up on your Mac</h1>
+    <p>Everything you are licensed for sits in one folder. Read the five steps, download the app, then send me your machine ID for a licence code.</p>
     <nav class="dl-os" aria-label="Choose your platform">
-      <span class="is-on" aria-current="page">
+      <a href="../">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M3 5.6l8-1.2v7H3zM13 4.1l8-1.1v8.4h-8zM3 13.6h8v7l-8-1.2zM13 13.6h8V22l-8-1.1z"/></svg>
         Windows
-      </span>
-      <a href="mac/">
+      </a>
+      <span class="is-on" aria-current="page">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.2 12.6c0-2 1.6-3 1.7-3.05-.9-1.35-2.35-1.55-2.85-1.55-1.2-.15-2.35.7-3 .7-.6 0-1.55-.7-2.55-.7-1.3 0-2.5.75-3.2 1.95-1.35 2.35-.35 5.8 1 7.7.65.9 1.4 1.95 2.4 1.9.95-.05 1.35-.6 2.5-.6 1.15 0 1.5.6 2.55.6 1.05 0 1.7-.9 2.35-1.85.75-1.05 1.05-2.1 1.05-2.15-.05 0-2-.8-2-2.95zM14.4 6.35c.5-.65.9-1.5.8-2.35-.75.05-1.7.5-2.25 1.15-.5.55-.95 1.45-.8 2.3.85.05 1.7-.4 2.25-1.1z"/></svg>
         Mac
-      </a>
+      </span>
     </nav>
   </header>
 
@@ -203,7 +218,7 @@
       <section class="dl-sec">
         <div class="dl-sechead">
           <h2>Setting up</h2>
-          <em>Five steps, once per PC</em>
+          <em>Five steps, once per Mac</em>
         </div>
 
         <div class="dl-steps">
@@ -211,59 +226,68 @@
           <div class="dl-step">
             <div class="dl-num">1</div>
             <div class="dl-body">
-              <h3>Turn off Smart App Control</h3>
+              <h3>Pick the right file for your Mac</h3>
               <div class="dl-crumb">
-                Windows Security
+                Apple menu
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-                App &amp; browser control
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-                Smart App Control settings
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-                Off
+                About This Mac
               </div>
-              <p><strong>Do this before you install.</strong> Recent Windows 11 builds block any app that does not carry a paid Microsoft certificate. These are custom-built tools made for you, so they have none. Nothing is wrong with them. You only need to do this once on the PC, not once per tool.</p>
-              <div class="dl-callout">
-                <strong>Expect a warning.</strong> Windows Defender or SmartScreen will flag an unrecognised app or unknown publisher during install — same reason. Choose <strong>More info → Run anyway</strong>. This appears on every new version, not just the first install.
-              </div>
+              <p>If it says <strong>Chip: Apple M1 / M2 / M3 / M4</strong>, take the <strong>Apple Silicon</strong> file. If it says <strong>Processor: Intel</strong>, take the <strong>Intel</strong> one. The two are not interchangeable — the wrong one simply will not open.</p>
+              <code class="dl-path">CardVault-1.1.0-macOS-arm64.dmg &nbsp;·&nbsp; CardVault-1.1.0-macOS-x86_64.dmg</code>
+              <p>Always take the newest version listed in <strong>What&rsquo;s new</strong>.</p>
             </div>
           </div>
 
           <div class="dl-step">
             <div class="dl-num">2</div>
             <div class="dl-body">
-              <h3>Install your tools</h3>
-              <p>The folder holds one setup file per tool you are licensed for, for example:</p>
-              <code class="dl-path">CardVaultSetup-1.0.4.exe</code>
-              <p>Download the setup file, run the ones you need and click through each installer. Always take the newest version listed in <strong>What&rsquo;s new</strong>.</p>
+              <h3>Install it</h3>
+              <p>Double-click the <strong>.dmg</strong> you downloaded. A window opens with the app on one side and an <strong>Applications</strong> folder on the other — <strong>drag the app onto Applications</strong>. That is the install.</p>
+              <p>Then eject the disk image (click the ⏏ beside it in Finder&rsquo;s sidebar) and delete the .dmg if you like. The app now lives in Applications and opens from there or from Launchpad.</p>
             </div>
           </div>
 
           <div class="dl-step">
             <div class="dl-num">3</div>
             <div class="dl-body">
-              <h3>Send me your machine ID</h3>
-              <p>Double-click any of the tools. A command window opens — that is the app&rsquo;s own server. <strong>Leave it open.</strong> The tool itself opens in your browser.</p>
-              <p>The first screen shows <strong>YOUR MACHINE ID</strong>. Click <strong>Copy</strong> and send that code to me so I can issue your licence.</p>
+              <h3>Open it the first time</h3>
+              <p>The first launch is the one awkward moment. macOS will say the app <strong>&ldquo;cannot be opened because Apple cannot check it for malicious software&rdquo;</strong>. Nothing is wrong with it — these are custom-built tools made for you, and they do not carry a paid Apple certificate.</p>
+              <p><strong>You only do this once per app.</strong> Which of these two you see depends on your macOS version:</p>
+              <div class="dl-fork">
+                <div>
+                  <h4>Most Macs</h4>
+                  <p><strong>Right-click</strong> (or Control-click) the app in Applications → <strong>Open</strong> → <strong>Open</strong> again in the dialog.</p>
+                </div>
+                <div>
+                  <h4>macOS 15 Sequoia and later</h4>
+                  <p>Try to open it once, then go to <strong>System Settings → Privacy &amp; Security</strong>, scroll down to the message about the app and click <strong>Open Anyway</strong>.</p>
+                </div>
+              </div>
+              <div class="dl-callout">
+                <strong>Double-clicking will not work until you have done this once.</strong> After that the app opens normally, every time, like any other.
+              </div>
             </div>
           </div>
 
           <div class="dl-step">
             <div class="dl-num">4</div>
             <div class="dl-body">
-              <h3>Activate</h3>
-              <p>I will send back a licence code. Paste it in and click <strong>Activate</strong> — the tool unlocks straight away.</p>
-              <div class="dl-callout is-key">
-                <strong>One code covers every tool on your licence.</strong> Activate once and use the same code in the other tools. You do not need a separate licence per tool.
-              </div>
-              <p>The licence is generated for <strong>that PC only</strong>. If you move to another laptop the same setup files will not activate — message me and I will issue a fresh licence. To check your licence later, or paste a renewal code, use the licence chip in the app header.</p>
+              <h3>Send me your machine ID</h3>
+              <p>The app opens in your browser after a second or two. That tab <em>is</em> the app; it runs quietly on your own Mac, with nothing on screen behind it.</p>
+              <p>The first screen shows <strong>YOUR MACHINE ID</strong>. Click <strong>Copy</strong> and send that code to me so I can issue your licence.</p>
             </div>
           </div>
 
           <div class="dl-step">
             <div class="dl-num">5</div>
             <div class="dl-body">
-              <h3>Create your master password</h3>
-              <p>The tools that hold your data — Card Vault, Gift Card Vault, Card Ledger and so on — ask you to set a master password on first unlock. It encrypts everything on your PC, and then you are free to start adding your details.</p>
+              <h3>Activate, then set your master password</h3>
+              <p>I will send back a licence code. Paste it in and click <strong>Activate</strong> — the tool unlocks straight away.</p>
+              <div class="dl-callout is-key">
+                <strong>One code covers every tool on your licence.</strong> Activate once and use the same code in the other tools. You do not need a separate licence per tool.
+              </div>
+              <p>The licence is generated for <strong>that Mac only</strong>. If you move to another machine the same file will not activate — message me and I will issue a fresh licence. To check your licence later, or paste a renewal code, use the licence chip in the app header.</p>
+              <p>Each tool that holds your data then asks you to set a <strong>master password</strong> on first unlock. It encrypts everything on your Mac, and then you are free to start adding your details.</p>
               <div class="dl-callout">
                 <strong>There is no reset, no recovery and no backdoor — deliberately.</strong> If you forget it, the data cannot be recovered by me or by anyone. Remember your master password and keep it somewhere safe.
               </div>
@@ -277,12 +301,16 @@
         <div class="dl-sechead"><h2>While you are using it</h2></div>
         <div class="dl-notes">
           <div class="dl-note">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="15" rx="2.4"/><path d="M7 9l2.5 2.5L7 14"/></svg>
-            <span><b>Keep the command window open.</b> Closing it stops that tool and locks your data.</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v8"/><path d="M7.2 6.2a7 7 0 1 0 9.6 0"/></svg>
+            <span><b>Quit from inside the app.</b> Use the power button at the top right — that locks your data and stops the tool. Just closing the browser tab leaves it running in the background.</span>
           </div>
           <div class="dl-note">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.4"/><path d="M8 10.5V7a4 4 0 018 0v3.5"/></svg>
-            <span><b>Your data never leaves your PC.</b> Everything stays encrypted on your computer. No cloud, no account, nothing is sent anywhere.</span>
+            <span><b>Your data never leaves your Mac.</b> Everything stays encrypted on your computer. No cloud, no account, nothing is sent anywhere.</span>
+          </div>
+          <div class="dl-note">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7.5A2.5 2.5 0 016.5 5h11A2.5 2.5 0 0120 7.5v9a2.5 2.5 0 01-2.5 2.5h-11A2.5 2.5 0 014 16.5z"/><path d="M8 19v2h8v-2"/></svg>
+            <span><b>Moving to a new Mac?</b> Your cards live in <em>Library → Application Support → YourCardJourney</em>. Copy that folder across before the first launch and everything comes with you — still encrypted, still needing your master password. Dragging the app to the Trash never deletes it.</span>
           </div>
           <div class="dl-note">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H8l-4 4V6a2 2 0 012-2h13a2 2 0 012 2z"/></svg>
@@ -299,7 +327,7 @@
 
         <div class="dl-first">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 4.6-3.4 8-8 9-4.6-1-8-4.4-8-9V7z"/><path d="M12 9v4"/><circle cx="12" cy="16.2" r=".7" fill="currentColor"/></svg>
-          <p><b>Read the steps first</b>Step 1 must be done <em>before</em> you install, or Windows will block the setup file.</p>
+          <p><b>Read step 3 first</b>macOS blocks the very first launch until you approve it once. Double-clicking alone will look like the app is broken.</p>
         </div>
 
         <a class="dl-btn" href="https://drive.google.com/drive/folders/1tNLwMhAb7rYitA-vB-qQTPZOIgWU58pC" target="_blank" rel="noopener">
@@ -308,13 +336,13 @@
         </a>
 
         <div class="dl-getmeta">
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8"/></svg>Windows 10 &amp; 11</span>
-          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 11l5 5 5-5M4 20h16"/></svg>About 12 MB per tool</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="4.5" width="18" height="12" rx="1.8"/><path d="M2 20h20"/></svg>macOS 12 Monterey or later</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 4v3M14 4v3M10 17v3M14 17v3M4 10h3M4 14h3M17 10h3M17 14h3"/></svg>Apple Silicon &amp; Intel</span>
           <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Setup takes 2 minutes</span>
         </div>
 
       </div>
-      <div class="dl-aside-foot">Opens Google Drive in a new tab. A printable copy of this guide is in the same folder.</div>
+      <div class="dl-aside-foot">Opens Google Drive in a new tab. Mac files end in <b>.dmg</b> — the <b>.exe</b> files in the same folder are for Windows.</div>
     </aside>
 
   </div>
