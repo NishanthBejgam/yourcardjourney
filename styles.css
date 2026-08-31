@@ -647,23 +647,6 @@ a { color: inherit; text-decoration: none; }
 }
 .btn-license:hover .arw { transform: translateX(4px); }
 
-/* Download Tools — the direct route to the setup guide, sits beside Get License */
-.btn-download {
-  color: var(--ink);
-  border: 1px solid var(--line-2);
-  background: var(--bg);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-}
-.btn-download .dlic { transition: transform 0.3s var(--ease); color: #6366f1; }
-.btn-download:hover {
-  transform: translateY(-2px);
-  border-color: #8b8bf5;
-  box-shadow: 0 12px 26px rgba(99, 102, 241, 0.18);
-}
-.btn-download:hover .dlic { transform: translateY(3px); }
-.btn-primary .dlic { transition: transform 0.3s var(--ease); }
-.btn-primary:hover .dlic { transform: translateY(3px); }
-
 .scroll-cue {
   margin-top: 30px;
   display: inline-flex;
@@ -924,44 +907,30 @@ a { color: inherit; text-decoration: none; }
 .lic-card:has(.lic-link) { cursor: pointer; }
 .lic-link:focus-visible { outline: 2px solid var(--ink); outline-offset: -3px; }
 
-/* closing line under the pricing pair — one clear way forward */
-.lic-next {
-  margin: 40px auto 0;
-  max-width: 880px;
-  display: flex;
-  flex-direction: column;
+/* Download — the same gradient pill as the Lifetime Value tag, made clickable */
+.lic-dl {
+  margin-top: 22px;
+  display: inline-flex;
   align-items: center;
-  gap: 18px;
-  text-align: center;
-}
-.lic-next p {
-  color: var(--ink-2);
-  font-size: 16px;
-  line-height: 1.6;
-  max-width: 52ch;
-}
-
-.lic-sub {
-  display: block;
-  margin-top: 7px;
-  font-size: 11.5px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  color: var(--muted);
-}
-
-.lic-tag {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 600;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 650;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #fff;
   background: var(--grad);
-  padding: 6px 13px;
+  padding: 12px 24px;
   border-radius: 999px;
   box-shadow: 0 6px 14px var(--glow, rgba(0,0,0,0.16));
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
+.lic-dl svg { transition: transform 0.3s var(--ease); }
+.lic-dl:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px var(--glow, rgba(0,0,0,0.2));
+}
+.lic-dl:hover svg { transform: translateY(2px); }
+.lic-dl:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
 
 /* the amazon pay gift-card artwork rectangle */
 .lic-art {
