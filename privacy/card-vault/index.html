@@ -92,9 +92,15 @@
   <section class="pp-sec">
     <h2>Permissions</h2>
     <p>
-      The app requests <b>no device permissions</b> &mdash; no internet, no
-      storage, no camera, no contacts, no location. If you ever see this app
-      asking your phone for a permission, it is not this app.
+      The app requests <b>no internet, storage, camera, contacts or
+      location</b> access &mdash; none of it, ever.
+    </p>
+    <p>
+      It declares two permissions, both only so it can show your phone&rsquo;s
+      own fingerprint prompt if you turn on fingerprint unlock:
+      <code>USE_BIOMETRIC</code> and <code>USE_FINGERPRINT</code>. Neither
+      gives the app your fingerprint &mdash; Android never shares that with any
+      app. They only let it ask the system to check, and be told yes or no.
     </p>
   </section>
 
