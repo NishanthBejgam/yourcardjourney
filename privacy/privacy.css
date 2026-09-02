@@ -1,0 +1,96 @@
+/* Privacy pages — scoped. Uses the site's own tokens from styles.css and adds
+   none of its own, the same rule the download page follows.
+
+   These two pages exist because Google Play and the App Store both require a
+   publicly reachable privacy policy URL before a listing can go live. They are
+   deliberately plain: a policy page that tries to be a landing page reads as
+   marketing, and this one has an unusually strong thing to say plainly. */
+
+.pp {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(28px, 6vh, 54px) 24px 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.pp-back {
+  font-size: 14px;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  text-decoration: none;
+  transition: color .25s var(--ease);
+}
+.pp-back:hover { color: var(--fg, #1d1d1f); }
+
+/* --- header --- */
+.pp-head { display: flex; flex-direction: column; gap: 14px; }
+.pp-app { display: flex; align-items: center; gap: 16px; }
+
+.pp-mark {
+  flex: 0 0 auto;
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: grid; place-items: center;
+  color: #fff;
+}
+/* One class per app so the page carries the app's own identity rather than a
+   generic site colour — a user arriving from a store listing should recognise
+   it immediately. Gradients match each app's favicon.svg. */
+.pp-mark-cv  { background: linear-gradient(135deg, #6366f1, #7c3aed 55%, #9333ea); }
+.pp-mark-gcv { background: linear-gradient(135deg, #22d3ee, #0891b2 55%, #0e7490); }
+
+.pp h1 {
+  margin: 0;
+  font-size: clamp(26px, 4vw, 33px);
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+.pp-sub { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+.pp-date { margin: 0; color: var(--muted); font-size: 13.5px; }
+
+/* --- lede --- */
+.pp-lede {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px 24px;
+}
+.pp-lede p { margin: 0 0 12px; font-size: 16px; line-height: 1.65; }
+.pp-lede p:last-child { margin-bottom: 0; }
+.pp-lede b { font-weight: 650; }
+
+/* --- sections --- */
+.pp-sec { display: flex; flex-direction: column; gap: 10px; }
+.pp-sec h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.pp-sec p { margin: 0; font-size: 16px; line-height: 1.7; }
+.pp-sec b { font-weight: 620; }
+.pp-sec a { color: inherit; text-underline-offset: 3px; }
+
+/* --- footer --- */
+.pp-foot {
+  margin-top: 8px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 10px;
+  font-size: 14px; color: var(--muted);
+}
+.pp-foot a { color: var(--muted); text-decoration: none; transition: color .25s var(--ease); }
+.pp-foot a:hover { color: var(--fg, #1d1d1f); }
+
+@media (prefers-color-scheme: dark) {
+  /* styles.css owns the palette; nothing to override here beyond the card,
+     which would otherwise sit at the same value as the page. */
+  .pp-lede { background: rgba(255, 255, 255, .04); }
+}
