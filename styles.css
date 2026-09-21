@@ -857,27 +857,41 @@ a { color: inherit; text-decoration: none; }
 .card:hover .an-btn { animation: an-press 0.4s var(--ease); }
 @keyframes an-press { 30% { transform: translateY(1.4px); } 100% { transform: none; } }
 
-/* 09 Karat Board: rate bars rise one after another */
-.an-bar { transform-box: fill-box; transform-origin: center bottom; }
-.card:hover .an-bar { animation: an-rise 0.5s var(--ease) both; }
-.card:hover .an-b2 { animation-delay: 0.12s; }
-.card:hover .an-b3 { animation-delay: 0.24s; }
-@keyframes an-rise { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+/* 09 Karat Board: bullion bars stack up, bottom first (as in the app's brand mark) */
+.an-ingot { transform-box: fill-box; transform-origin: center bottom; }
+.card:hover .an-ingot { animation: an-stack 0.42s var(--ease) both; }
+.card:hover .an-ingot:nth-of-type(4) { animation-delay: 0s; }
+.card:hover .an-ingot:nth-of-type(2) { animation-delay: 0.07s; }
+.card:hover .an-ingot:nth-of-type(3) { animation-delay: 0.13s; }
+.card:hover .an-ingot:nth-of-type(1) { animation-delay: 0.2s; }
+@keyframes an-stack { from { transform: translateY(-4px) scaleY(.7); opacity: .35; } to { transform: none; opacity: 1; } }
 
-/* 10 BlinkDeal: the bolt strikes, then blinks */
-.an-bolt { stroke-dasharray: 100; }
-.card:hover .an-bolt { animation: an-write 0.45s var(--ease) both, an-blink 0.6s 0.45s var(--ease); }
-@keyframes an-blink { 30% { opacity: .25; } 60% { opacity: 1; } 80% { opacity: .35; } 100% { opacity: 1; } }
+/* 10 BlinkDeal: the coin rim rings, the bolt strikes it */
+.an-rim, .an-bolt { transform-box: fill-box; transform-origin: center; }
+.card:hover .an-rim { animation: an-ring 0.55s var(--ease) both; }
+.card:hover .an-bolt { animation: an-strike 0.55s var(--ease) both; }
+@keyframes an-ring { 0% { transform: scale(.82); opacity: .35; } 60% { transform: scale(1.07); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+@keyframes an-strike {
+  0% { opacity: .15; transform: scale(.7) translateY(-2px); }
+  40% { opacity: 1; transform: scale(1.18); }
+  70% { opacity: .55; transform: scale(.97); }
+  100% { opacity: 1; transform: none; }
+}
 
-/* 11 AmazonGold: the coin flips to show its price */
-.an-coin { transform-box: view-box; transform-origin: 12px 12px; }
-.card:hover .an-coin { animation: an-flip 0.8s var(--ease); }
-@keyframes an-flip { 50% { transform: scaleX(0.08); } 100% { transform: scaleX(1); } }
+/* 11 AmazonGold: the coin rolls in, the smile draws itself */
+.an-roll { transform-box: fill-box; transform-origin: center; }
+.an-smile, .an-tip { stroke-dasharray: 40; }
+.card:hover .an-roll { animation: an-rollin 0.7s var(--ease) both; }
+.card:hover .an-smile { animation: an-draw 0.55s 0.12s var(--ease) both; }
+.card:hover .an-tip { animation: an-draw 0.3s 0.5s ease both; }
+@keyframes an-rollin { 0% { transform: translateX(-7px) rotate(-150deg); opacity: .4; } 100% { transform: none; opacity: 1; } }
+@keyframes an-draw { 0% { stroke-dashoffset: 40; opacity: .3; } 100% { stroke-dashoffset: 0; opacity: 1; } }
 
-/* 12 Reward Switch: the toggle slides on */
-.an-knob { transform-box: view-box; }
-.card:hover .an-knob { animation: an-toggle 0.5s var(--ease) both; }
-@keyframes an-toggle { from { transform: translateX(0); } to { transform: translateX(9px); } }
+/* 12 Reward Switch: the knob slides on and the rays light up */
+.an-knob { transform-box: fill-box; transform-origin: center; transition: transform 0.45s var(--ease); }
+.card:hover .an-knob { transform: translateX(7px); }
+.an-ray { transform-box: fill-box; transform-origin: center; opacity: 0; transform: scale(.4); transition: opacity 0.3s 0.15s, transform 0.4s 0.15s var(--ease); }
+.card:hover .an-ray { opacity: 1; transform: scale(1); }
 
 .card .idx {
   position: absolute;
