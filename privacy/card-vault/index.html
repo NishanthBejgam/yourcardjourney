@@ -34,7 +34,7 @@
         <p class="pp-sub">Card Vault for Android and iPhone</p>
       </div>
     </div>
-    <p class="pp-date">Last updated 1 September 2026</p>
+    <p class="pp-date">Last updated 6 October 2026</p>
   </header>
 
   <div class="pp-lede">
@@ -90,17 +90,48 @@
   </section>
 
   <section class="pp-sec">
-    <h2>Permissions</h2>
+    <h2>Scanning a card with the camera</h2>
     <p>
-      The app requests <b>no internet, storage, camera, contacts or
-      location</b> access &mdash; none of it, ever.
+      <b>Scan card</b>, at the top of the Add card form, can read a card
+      through your phone's camera so you do not have to type it. The camera is
+      switched on only while the scanner is on screen, and switches off the
+      moment you close it, close the form, lock the vault or leave the app.
     </p>
     <p>
-      It declares two permissions, both only so it can show your phone&rsquo;s
-      own fingerprint prompt if you turn on fingerprint unlock:
-      <code>USE_BIOMETRIC</code> and <code>USE_FINGERPRINT</code>. Neither
-      gives the app your fingerprint &mdash; Android never shares that with any
-      app. They only let it ask the system to check, and be told yes or no.
+      Each camera frame is read <b>on your phone</b> to find four things only:
+      the card number, the expiry date, the CVV and the name printed on the
+      card. The frame is then discarded. Nothing is photographed, recorded,
+      saved or sent anywhere. The details are placed in the form for you to
+      check, and nothing is saved until you tap Save.
+    </p>
+  </section>
+
+  <section class="pp-sec">
+    <h2>Permissions</h2>
+    <p>
+      The app requests <b>no internet, storage, contacts or location</b>
+      access &mdash; none of it, ever. It asks for only two things, each for
+      one purpose:
+    </p>
+    <ul>
+      <li><b>Camera</b> &mdash; only for scanning a card, as described above.
+        Your phone asks you the first time you tap <i>Scan card</i>; if you say
+        no, everything else works and you can type cards in instead. You can
+        change your answer later in Android's app permissions or in the
+        iPhone's Settings &rsaquo; Card Vault.</li>
+      <li><b>Fingerprint, Face ID or Touch ID</b> &mdash; only to show your
+        phone's own prompt if you turn on that unlock in Settings
+        (<code>USE_BIOMETRIC</code> and <code>USE_FINGERPRINT</code> on
+        Android). Your fingerprint or face never reaches the app; the phone
+        only tells it whether the match succeeded. Your master password is
+        then kept in the phone's secure store (the Keychain on iPhone) and
+        released only on a match. Turning the feature off deletes it.</li>
+    </ul>
+    <p>
+      Because the Android app has no internet permission at all, nothing the
+      camera sees could leave your phone even if the app tried. On iPhone,
+      where apps are not given an internet permission to decline, the app
+      simply makes no network requests.
     </p>
   </section>
 
