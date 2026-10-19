@@ -54,31 +54,26 @@ document.querySelectorAll('.card').forEach((card) => {
 });
 
 // --- Icons act out their app on their own (phones never hover) ---
-// A wave across each panel as it arrives, then one random icon every ~1.8s.
+// Strictly one icon at a time: it plays, settles, a short pause, then the next.
+// No launch wave - the page arrives still.
 (() => {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   const cards = [...document.querySelectorAll('.tools .card')];
   if (!cards.length) return;
-  const play = (c) => {
-    c.classList.remove('play'); void c.offsetWidth; c.classList.add('play');
-    clearTimeout(c._playT); c._playT = setTimeout(() => c.classList.remove('play'), 1300);
+  const PLAY = 1100, GAP = 900;
+  let last = null;
+  const next = () => {
+    if (!document.hidden) {
+      const seen = cards.filter((c) => { const r = c.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; });
+      const pool = (seen.length ? seen : cards).filter((c) => c !== last && !c.matches(':hover'));
+      const c = pool[Math.floor(Math.random() * pool.length)];
+      if (c) {
+        last = c;
+        c.classList.add('play');
+        setTimeout(() => c.classList.remove('play'), PLAY);
+      }
+    }
+    setTimeout(next, PLAY + GAP);
   };
-  const wave = (grid) => [...grid.children].forEach((c, i) => setTimeout(() => play(c), 900 + i * 220));
-  const grids = [...document.querySelectorAll('.tools .grid')];
-  if ('IntersectionObserver' in window) {
-    const io = new IntersectionObserver((es) => es.forEach((e) => {
-      if (e.isIntersecting) { wave(e.target); io.unobserve(e.target); }
-    }), { threshold: 0.4 });
-    grids.forEach((g) => io.observe(g));
-  } else grids.forEach(wave);
-
-  let last = -1;
-  setInterval(() => {
-    if (document.hidden) return;
-    const seen = cards.filter((c) => { const r = c.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; });
-    const pool = seen.length ? seen : cards;
-    let i; do { i = Math.floor(Math.random() * pool.length); } while (pool.length > 1 && pool[i] === cards[last]);
-    last = cards.indexOf(pool[i]);
-    play(pool[i]);
-  }, 1200);
+  setTimeout(next, 1800);
 })();
