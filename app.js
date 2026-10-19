@@ -63,7 +63,7 @@ document.querySelectorAll('.card').forEach((card) => {
     c.classList.remove('play'); void c.offsetWidth; c.classList.add('play');
     clearTimeout(c._playT); c._playT = setTimeout(() => c.classList.remove('play'), 1300);
   };
-  const wave = (grid) => [...grid.children].forEach((c, i) => setTimeout(() => play(c), 500 + i * 160));
+  const wave = (grid) => [...grid.children].forEach((c, i) => setTimeout(() => play(c), 900 + i * 220));
   const grids = [...document.querySelectorAll('.tools .grid')];
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((es) => es.forEach((e) => {
@@ -80,5 +80,5 @@ document.querySelectorAll('.card').forEach((card) => {
     let i; do { i = Math.floor(Math.random() * pool.length); } while (pool.length > 1 && pool[i] === cards[last]);
     last = cards.indexOf(pool[i]);
     play(pool[i]);
-  }, 1800);
+  }, 1200);
 })();
