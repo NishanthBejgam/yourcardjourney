@@ -52,3 +52,33 @@ document.querySelectorAll('.card').forEach((card) => {
   });
   card.addEventListener('pointerleave', () => { tile.style.transform = ''; });
 });
+
+// --- Icons act out their app on their own (phones never hover) ---
+// A wave across each panel as it arrives, then one random icon every ~1.8s.
+(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cards = [...document.querySelectorAll('.tools .card')];
+  if (!cards.length) return;
+  const play = (c) => {
+    c.classList.remove('play'); void c.offsetWidth; c.classList.add('play');
+    clearTimeout(c._playT); c._playT = setTimeout(() => c.classList.remove('play'), 1300);
+  };
+  const wave = (grid) => [...grid.children].forEach((c, i) => setTimeout(() => play(c), 500 + i * 160));
+  const grids = [...document.querySelectorAll('.tools .grid')];
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) { wave(e.target); io.unobserve(e.target); }
+    }), { threshold: 0.4 });
+    grids.forEach((g) => io.observe(g));
+  } else grids.forEach(wave);
+
+  let last = -1;
+  setInterval(() => {
+    if (document.hidden) return;
+    const seen = cards.filter((c) => { const r = c.getBoundingClientRect(); return r.bottom > 0 && r.top < innerHeight; });
+    const pool = seen.length ? seen : cards;
+    let i; do { i = Math.floor(Math.random() * pool.length); } while (pool.length > 1 && pool[i] === cards[last]);
+    last = cards.indexOf(pool[i]);
+    play(pool[i]);
+  }, 1800);
+})();

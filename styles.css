@@ -778,7 +778,7 @@ a { color: inherit; text-decoration: none; }
   transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease), filter 0.4s var(--ease);
 }
 .tile svg { width: 27px; height: 27px; display: block; }
-.card:hover .tile {
+.card:hover .tile, .card.play .tile {
   transform: translateY(-2px) scale(1.05);
   filter: brightness(1.06) saturate(1.05);
   box-shadow:
@@ -803,30 +803,30 @@ a { color: inherit; text-decoration: none; }
 
 /* 01 Ledger: entry rows write themselves in sequence */
 .an-row { stroke-dasharray: 100; }
-.card:hover .an-row { animation: an-write 0.5s var(--ease) both; }
-.card:hover .an-d2 { animation-delay: 0.14s; }
-.card:hover .an-d3 { animation-delay: 0.28s; }
+.card:hover .an-row, .card.play .an-row { animation: an-write 0.5s var(--ease) both; }
+.card:hover .an-d2, .card.play .an-d2 { animation-delay: 0.14s; }
+.card:hover .an-d3, .card.play .an-d3 { animation-delay: 0.28s; }
 @keyframes an-write { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
 
 /* 02 Card Vault: stripe slides on, signature stamps in */
 .an-stripe, .an-sig { transform-box: fill-box; transform-origin: left center; }
-.card:hover .an-stripe { animation: an-grow 0.5s var(--ease) both; }
-.card:hover .an-sig { animation: an-grow 0.45s 0.22s var(--ease) both; }
+.card:hover .an-stripe, .card.play .an-stripe { animation: an-grow 0.5s var(--ease) both; }
+.card:hover .an-sig, .card.play .an-sig { animation: an-grow 0.45s 0.22s var(--ease) both; }
 @keyframes an-grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* 03 Gift Card Vault: keyhole turns like a dial being locked */
 .an-dial { transform-box: view-box; transform-origin: 12px 10.6px; }
-.card:hover .an-dial { animation: an-turn 0.85s var(--ease) both; }
+.card:hover .an-dial, .card.play .an-dial { animation: an-turn 0.85s var(--ease) both; }
 @keyframes an-turn { 60% { transform: rotate(200deg); } 100% { transform: rotate(180deg); } }
 
 /* 04 Gift Card Loader: ribbon bow gives a happy wiggle */
 .an-bow { transform-box: view-box; transform-origin: 12px 5.5px; }
-.card:hover .an-bow { animation: an-wiggle 0.7s var(--ease); }
+.card:hover .an-bow, .card.play .an-bow { animation: an-wiggle 0.7s var(--ease); }
 @keyframes an-wiggle { 25% { transform: rotate(-13deg); } 60% { transform: rotate(9deg); } 100% { transform: rotate(0); } }
 
 /* 05 Amex Shopwise: the gift box does an excited bounce */
 .an-box { transform-box: view-box; transform-origin: 12px 19.5px; }
-.card:hover .an-box { animation: an-bounce 0.7s var(--ease); }
+.card:hover .an-box, .card.play .an-box { animation: an-bounce 0.7s var(--ease); }
 @keyframes an-bounce {
   30% { transform: translateY(-2.6px) scaleY(1.06); }
   55% { transform: translateY(0) scaleY(0.94); }
@@ -836,40 +836,40 @@ a { color: inherit; text-decoration: none; }
 
 /* 06 RuPay Redeem: the check redraws — redeemed! */
 .an-check { stroke-dasharray: 100; }
-.card:hover .an-check { animation: an-write 0.55s 0.08s var(--ease) both; }
+.card:hover .an-check, .card.play .an-check { animation: an-write 0.55s 0.08s var(--ease) both; }
 
 /* 07 Quick Mailer: envelope lifts off, flap seals shut */
 .an-send { transform-box: view-box; transform-origin: 12px 12px; }
-.card:hover .an-send { animation: an-fly 0.8s var(--ease); }
+.card:hover .an-send, .card.play .an-send { animation: an-fly 0.8s var(--ease); }
 @keyframes an-fly {
   30% { transform: translate(1.6px, -1.6px) rotate(-7deg); }
   60% { transform: translate(-0.5px, 0.4px) rotate(2deg); }
   100% { transform: none; }
 }
 .an-flap { stroke-dasharray: 100; }
-.card:hover .an-flap { animation: an-write 0.5s 0.1s var(--ease) both; }
+.card:hover .an-flap, .card.play .an-flap { animation: an-write 0.5s 0.1s var(--ease) both; }
 
 /* 08 Focus Sprint: press the crown, needle sweeps a lap */
 .an-needle { transform-box: view-box; transform-origin: 12px 13.5px; }
-.card:hover .an-needle { animation: an-sweep-once 0.9s 0.12s var(--ease) both; }
+.card:hover .an-needle, .card.play .an-needle { animation: an-sweep-once 0.9s 0.12s var(--ease) both; }
 @keyframes an-sweep-once { to { transform: rotate(360deg); } }
 .an-btn { transform-box: view-box; transform-origin: 12px 3px; }
-.card:hover .an-btn { animation: an-press 0.4s var(--ease); }
+.card:hover .an-btn, .card.play .an-btn { animation: an-press 0.4s var(--ease); }
 @keyframes an-press { 30% { transform: translateY(1.4px); } 100% { transform: none; } }
 
 /* 09 Karat Board: bullion bars stack up, bottom first (as in the app's brand mark) */
 .an-ingot { transform-box: fill-box; transform-origin: center bottom; }
-.card:hover .an-ingot { animation: an-stack 0.42s var(--ease) both; }
-.card:hover .an-ingot:nth-of-type(4) { animation-delay: 0s; }
-.card:hover .an-ingot:nth-of-type(2) { animation-delay: 0.07s; }
-.card:hover .an-ingot:nth-of-type(3) { animation-delay: 0.13s; }
-.card:hover .an-ingot:nth-of-type(1) { animation-delay: 0.2s; }
+.card:hover .an-ingot, .card.play .an-ingot { animation: an-stack 0.42s var(--ease) both; }
+.card:hover .an-ingot:nth-of-type(4), .card.play .an-ingot:nth-of-type(4) { animation-delay: 0s; }
+.card:hover .an-ingot:nth-of-type(2), .card.play .an-ingot:nth-of-type(2) { animation-delay: 0.07s; }
+.card:hover .an-ingot:nth-of-type(3), .card.play .an-ingot:nth-of-type(3) { animation-delay: 0.13s; }
+.card:hover .an-ingot:nth-of-type(1), .card.play .an-ingot:nth-of-type(1) { animation-delay: 0.2s; }
 @keyframes an-stack { from { transform: translateY(-4px) scaleY(.7); opacity: .35; } to { transform: none; opacity: 1; } }
 
 /* 10 BlinkDeal: the coin rim rings, the bolt strikes it */
 .an-rim, .an-bolt { transform-box: fill-box; transform-origin: center; }
-.card:hover .an-rim { animation: an-ring 0.55s var(--ease) both; }
-.card:hover .an-bolt { animation: an-strike 0.55s var(--ease) both; }
+.card:hover .an-rim, .card.play .an-rim { animation: an-ring 0.55s var(--ease) both; }
+.card:hover .an-bolt, .card.play .an-bolt { animation: an-strike 0.55s var(--ease) both; }
 @keyframes an-ring { 0% { transform: scale(.82); opacity: .35; } 60% { transform: scale(1.07); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
 @keyframes an-strike {
   0% { opacity: .15; transform: scale(.7) translateY(-2px); }
@@ -881,17 +881,17 @@ a { color: inherit; text-decoration: none; }
 /* 11 AmazonGold: the coin rolls in, the smile draws itself */
 .an-roll { transform-box: fill-box; transform-origin: center; }
 .an-smile, .an-tip { stroke-dasharray: 40; }
-.card:hover .an-roll { animation: an-rollin 0.7s var(--ease) both; }
-.card:hover .an-smile { animation: an-draw 0.55s 0.12s var(--ease) both; }
-.card:hover .an-tip { animation: an-draw 0.3s 0.5s ease both; }
+.card:hover .an-roll, .card.play .an-roll { animation: an-rollin 0.7s var(--ease) both; }
+.card:hover .an-smile, .card.play .an-smile { animation: an-draw 0.55s 0.12s var(--ease) both; }
+.card:hover .an-tip, .card.play .an-tip { animation: an-draw 0.3s 0.5s ease both; }
 @keyframes an-rollin { 0% { transform: translateX(-7px) rotate(-150deg); opacity: .4; } 100% { transform: none; opacity: 1; } }
 @keyframes an-draw { 0% { stroke-dashoffset: 40; opacity: .3; } 100% { stroke-dashoffset: 0; opacity: 1; } }
 
 /* 12 Reward Switch: the knob slides on and the rays light up */
 .an-knob { transform-box: fill-box; transform-origin: center; transition: transform 0.45s var(--ease); }
-.card:hover .an-knob { transform: translateX(7px); }
+.card:hover .an-knob, .card.play .an-knob { transform: translateX(7px); }
 .an-ray { transform-box: fill-box; transform-origin: center; opacity: 0; transform: scale(.4); transition: opacity 0.3s 0.15s, transform 0.4s 0.15s var(--ease); }
-.card:hover .an-ray { opacity: 1; transform: scale(1); }
+.card:hover .an-ray, .card.play .an-ray { opacity: 1; transform: scale(1); }
 
 .card .idx {
   position: absolute;
@@ -1321,4 +1321,28 @@ main > .tools:first-child { padding-top: 14px; }
     transition: opacity 0.22s var(--ease), transform 0.3s var(--ease);
   }
   .tools .card:hover p, .tools .card:focus-visible p { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+/* ---------- Icons come alive on their own (phones have no hover) ----------
+   app.js adds .play to a tile: a wave on arrival, then one at a time. */
+.tools .card.play .tile { animation: tile-pop 0.7s var(--ease); }
+@keyframes tile-pop {
+  0% { transform: scale(1); }
+  30% { transform: translateY(-4px) scale(1.08); }
+  60% { transform: translateY(0) scale(0.97); }
+  100% { transform: scale(1); }
+}
+/* real-logo icons get a light sweep across the glass */
+.tile-mark { position: relative; }
+.tile-mark::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.65) 48%, transparent 64%);
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.card.play .tile-mark::after,
+.card:hover .tile-mark::after { animation: mark-sweep 0.9s var(--ease) 0.1s; }
+@keyframes mark-sweep { from { transform: translateX(-120%); } to { transform: translateX(120%); } }
+@media (prefers-reduced-motion: reduce) {
+  .tools .card.play .tile, .card.play .tile-mark::after, .card:hover .tile-mark::after { animation: none; }
 }
