@@ -1,0 +1,13 @@
+<!-- Gift Card Vault icon (1.3.0): "Ribbon Cross" on "Ocean", chosen by the
+     user 03-Oct-2026 from the options page (six designs x three grounds).
+     Card Vault's Keyhole drawing language - white card, orange stripe in the
+     SAME place, keyhole - crossed with a ribbon and bow, so the two read as a
+     family. Two-colour ground #3f97ff -> #3a2fc9, corner to corner (the same
+     vector Card Vault 1.3.3 chose); keyhole and bar in the dark stop. One
+     72-unit drawing, reused by icon-foreground.svg, web/favicon.svg, the
+     header mark, the lock badge and tools/make-splash.js. No network marks. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3f97ff"/><stop offset="1" stop-color="#3a2fc9"/></linearGradient></defs>
+  <rect width="72" height="72" rx="18" fill="url(#g)"/>
+  <g transform="translate(0 3.5)"><rect x="13" y="21" width="46" height="31" rx="7" fill="#ffffff"/><rect x="13" y="27" width="46" height="4.6" fill="#ff7a2f"/><rect x="21.5" y="21" width="4.6" height="31" fill="#ff7a2f"/><ellipse cx="19.2" cy="17.4" rx="5.2" ry="3.3" transform="rotate(-28 19.2 17.4)" fill="none" stroke="#ff7a2f" stroke-width="2.7"/><ellipse cx="28.4" cy="17.4" rx="5.2" ry="3.3" transform="rotate(28 28.4 17.4)" fill="none" stroke="#ff7a2f" stroke-width="2.7"/><circle cx="23.8" cy="21" r="3" fill="#ff7a2f"/><circle cx="39.5" cy="40" r="4.6" fill="#3a2fc9"/><path d="M37.09 42.53h4.83l1.61 6.21h-8.05z" fill="#3a2fc9"/><rect x="46" y="43.5" width="8" height="2.8" rx="1.4" fill="#3a2fc9" opacity=".55"/></g>
+</svg>
