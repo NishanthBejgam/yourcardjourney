@@ -1175,7 +1175,7 @@ a.card:hover::after { opacity: 0.75; transform: translate(0, 0); }
 .tile-mark img { width: 100%; height: 100%; display: block; }
 
 .hub-group { position: relative; z-index: 1; margin: 46px 0 16px; }
-.section-head + .flow-line + .hub-group { margin-top: 8px; }
+.flow-line + .hub-group { margin-top: 0; }
 .hub-head {
   display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
   font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
@@ -1225,3 +1225,36 @@ a.card:hover::after { opacity: 0.75; transform: translate(0, 0); }
 
 /* hub is now the first section on the page */
 main > .tools:first-child { padding-top: 48px; }
+
+/* ---------- Compact hub: icon-left rows, one screen ---------- */
+.tools .flow-line { display: none; }
+main > .tools:first-child { padding-top: 26px; }
+.hub-group { margin: 22px 0 10px; }
+.tools .grid { gap: 12px; }
+.tools .card {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 14px; row-gap: 2px;
+  align-items: center;
+  min-height: 0;
+  padding: 14px 40px 14px 14px;
+  border-radius: 18px;
+}
+.tools .card .tile {
+  grid-row: 1 / 3;
+  width: 46px; height: 46px; border-radius: 13px;
+}
+.tools .card .tile svg { width: 23px; height: 23px; }
+.tools .card .tile-mark img { width: 100%; height: 100%; }
+.tools .card h3 { margin: 0; font-size: 15.5px; align-self: end; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tools .card p  { margin: 0; font-size: 13px; line-height: 1.35; align-self: start; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tools .card .idx { display: none; }
+.tools a.card::after { right: 16px; bottom: auto; top: calc(50% - 8px); width: 14px; height: 14px; }
+.tools .card:hover { transform: translateY(-3px); }
+
+.hub-foot { margin: 34px auto 0; }
+.hub-foot h2 { font-size: clamp(26px, 3.4vw, 38px); }
+
+@media (max-width: 1100px) { .tools .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px)  { .tools .grid { grid-template-columns: 1fr; gap: 10px; } .hub-head small { display: none; } }
