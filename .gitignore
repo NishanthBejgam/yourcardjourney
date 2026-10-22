@@ -1,3 +1,5 @@
 .claude/
 *.png
 yourcardjourney.png
+!apple-touch-icon.png
+!icon-*.png
