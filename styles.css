@@ -822,6 +822,9 @@ a { color: inherit; text-decoration: none; }
 /* 04 Gift Card Loader: ribbon bow gives a happy wiggle */
 .an-bow { transform-box: view-box; transform-origin: 12px 5.5px; }
 .card:hover .an-bow, .card.play .an-bow { animation: an-wiggle 0.7s var(--ease); }
+/* Brands: the price tag swings on its hole */
+.an-tagw { transform-box: view-box; transform-origin: 8px 8px; }
+.card:hover .an-tagw, .card.play .an-tagw { animation: an-wiggle 0.7s var(--ease); }
 @keyframes an-wiggle { 25% { transform: rotate(-13deg); } 60% { transform: rotate(9deg); } 100% { transform: rotate(0); } }
 
 /* 05 Amex Shopwise: the gift box does an excited bounce */
