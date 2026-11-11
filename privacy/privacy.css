@@ -43,6 +43,7 @@
    it immediately. Gradients match each app's favicon.svg. */
 .pp-mark-cv  { background: linear-gradient(135deg, #6366f1, #7c3aed 55%, #9333ea); }
 .pp-mark-gcv { background: linear-gradient(135deg, #22d3ee, #0e7490); }
+.pp-mark-ms  { background: #0b1a20; overflow: hidden; }
 
 .pp h1 {
   margin: 0;
